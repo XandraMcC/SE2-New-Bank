@@ -24,7 +24,10 @@ public class NewBankClientHandler extends Thread{
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		out = new PrintWriter(s.getOutputStream(), true);
 	}
-	
+
+	/**
+	 * Writes output to the client, reads and processes responses
+	 */
 	public void run() {
 		try {
 			CustomerID customer = null;
