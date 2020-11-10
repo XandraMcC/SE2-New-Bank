@@ -15,15 +15,15 @@ public class NewBank {
 	private void addTestData() {
 		Customer bhagy = new Customer("Bhagy", "bhagy");
 		bhagy.addAccount(new Account("Main", 1000.0));
-		customers.put(bhagy.getName(), bhagy);
+		customers.put(bhagy.getName().toUpperCase(), bhagy);
 		
 		Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
-		customers.put(christina.getName(), christina);
+		customers.put(christina.getName().toUpperCase(), christina);
 		
 		Customer john = new Customer("John", "john");
 		john.addAccount(new Account("Checking", 250.0));
-		customers.put(john.getName(), john);
+		customers.put(john.getName().toUpperCase(), john);
 	}
 	
 	public static NewBank getBank() {
@@ -31,7 +31,7 @@ public class NewBank {
 	}
 	
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
-		if(customers.containsKey(userName)) {
+		if(customers.containsKey(userName.toUpperCase())) {
 			if (customers.get(userName).getPassword().equals(password)) {
 				return new CustomerID(userName);
 			}

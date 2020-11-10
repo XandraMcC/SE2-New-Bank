@@ -76,7 +76,6 @@ public class NewBankClientHandler extends Thread {
 	 * @return the customerID of the logged in user or null if the login failed
 	 * e.g. incorrect username or password
 	 *
-	 * TODO usernames should be case insensitive
 	 */
 	private CustomerID handleLogin() throws IOException {
 		// ask for user name
