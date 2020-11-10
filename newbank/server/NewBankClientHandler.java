@@ -29,12 +29,19 @@ public class NewBankClientHandler extends Thread{
 	 * Writes output to the client, reads and processes responses
 	 */
 	public void run() {
+		boolean running = true; // keeps track of if commands are being processed
+		int loginAttempts = 0; // the number of login attempts
+		CustomerID customer = null; // the logged in user
 		try {
-			CustomerID customer = null;
-			while (true) {
+			while (running) {
 				// keep getting requests from the client and processing them
 				if (customer == null) {
+					if (loginAttempts > 3) {
+						out.println("Too many login attempts.  Connection closed.");
+						running = false;
+					}
 					customer = handleLogin();
+					loginAttempts++;
 				} else if (customer != null) {
 					// if the user is authenticated then get requests from the user and process them
 					out.println("What do you want to do?");
@@ -42,6 +49,10 @@ public class NewBankClientHandler extends Thread{
 					System.out.println("Request from " + customer.getKey());
 					String response = bank.processRequest(customer, request);
 					out.println(response);
+					if (request.matches("EXIT|END|CLOSE")) {
+						customer = null;
+						running = false;
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -64,8 +75,6 @@ public class NewBankClientHandler extends Thread{
 	 * e.g. incorrect username or password
 	 *
 	 * TODO usernames should be case insensitive
-	 *
-	 * TODO limit login attempts per session to mitigate brute force attacks
 	 */
 	private CustomerID handleLogin() throws IOException {
 		// ask for user name
