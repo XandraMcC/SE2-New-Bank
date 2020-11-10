@@ -32,7 +32,7 @@ public class NewBank {
 	
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if(customers.containsKey(userName.toUpperCase())) {
-			if (customers.get(userName).getPassword().equals(password)) {
+			if (customers.get(userName.toUpperCase()).getPassword().equals(password)) {
 				return new CustomerID(userName);
 			}
 		}

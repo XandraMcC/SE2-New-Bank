@@ -41,9 +41,10 @@ public class NewBankClientHandler extends Thread {
 					if (loginAttempts > MAX_LOGIN_ATTEMPTS) {
 						out.println("Too many login attempts.  Connection closed.");
 						running = false;
+					} else {
+						customer = handleLogin();
+						loginAttempts++;
 					}
-					customer = handleLogin();
-					loginAttempts++;
 				} else if (customer != null) {
 					// if the user is authenticated then get requests from the user and process them
 					out.println("What do you want to do?");
