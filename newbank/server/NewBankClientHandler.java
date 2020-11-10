@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class NewBankClientHandler extends Thread{
-	
+public class NewBankClientHandler extends Thread {
+
+	static final int MAX_LOGIN_ATTEMPTS = 3;
+
 	private NewBank bank;
 	private BufferedReader in;
 	private PrintWriter out;
@@ -36,7 +38,7 @@ public class NewBankClientHandler extends Thread{
 			while (running) {
 				// keep getting requests from the client and processing them
 				if (customer == null) {
-					if (loginAttempts > 3) {
+					if (loginAttempts > MAX_LOGIN_ATTEMPTS) {
 						out.println("Too many login attempts.  Connection closed.");
 						running = false;
 					}
