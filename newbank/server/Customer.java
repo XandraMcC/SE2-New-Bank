@@ -12,7 +12,7 @@ public class Customer {
 		}
 		return s;
 	}
-	//Method to print all current balances
+	//Method to print all current balances.
 	public String AllCurrentBalanceToString(){
 		String s = ""; //Blank string is initiated.
 		for(Account a : accounts){//Cycle through all the customers accounts

@@ -30,7 +30,7 @@ public class NewBank {
 		return null;
 	}
 	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
-	// commands from the NewBank customer are processed in this method
+	// commands from the NewBank customer are processed in this method.
 	public synchronized String processRequest(CustomerID customer, String request) {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
