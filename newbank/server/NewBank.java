@@ -23,6 +23,8 @@ public class NewBank {
 		
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
+		john.addAccount(new Account("Main", 1250.0));
+		john.addAccount(new Account("Savings", 50.0));
 		customers.put("John", john);
 	}
 	
@@ -36,14 +38,32 @@ public class NewBank {
 		}
 		return null;
 	}
+	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+
+
+			//The Next three cases deal with getting the current balance for a specific account type.
+			case "Show Current Balance for Main" :
+				AccountType = "Main";
+				return ShowMyBal(customer, AccountType);
+
+			case "Show Current Balance for Checking" :
+				AccountType = "Checking";
+				return ShowMyBal(customer, AccountType);
+
+			case "Show Current Balance for Savings" :
+				AccountType = "Savings";
+				return ShowMyBal(customer, AccountType);
+
 			default : return "FAIL";
 			}
+
+
 		}
 		return "FAIL";
 	}
@@ -51,5 +71,8 @@ public class NewBank {
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
+
+	//Handles retrieving the current balance for specific type of account.
+	private String ShowMyBal(CustomerID customer, String A){return (customers.get(customer.getKey())).CurrentBalanceToString(A);}
 
 }

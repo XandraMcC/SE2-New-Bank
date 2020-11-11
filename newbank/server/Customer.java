@@ -17,23 +17,16 @@ public class Customer {
 		}
 		return s;
 	}
-	public String AllCurrentBalanceToString(){
-		String s = "";
-		for(Account a : accounts){
-			s += a.getAccountName() + ": " + String.valueOf(a.getCurrentBalance()) + "\n";
-		}
-		return s;
-	}
 
-	public String CurrentBalanceToString(String A){
-		String x = "Error No Account Found";
+	//Method to get current balance of specific account type.
+	public String CurrentBalanceToString(String A){ //Parameter A is the chosen account type.
+		String x = "Error No Account Found"; // Still Needs work.
 		String s = null;
-		for(Account a : accounts) {
-			if (a.getAccountName() == A){
-				s = a.getAccountName() + ": " + String.valueOf(a.getCurrentBalance()) + "\n";
+		for(Account a : accounts) { //Cycle through each of the customers accounts.
+			if (a.getAccountName().equals(A)){ // If the chosen account is matched with an actual account balance is returned.
+				s = a.getAccountName() + ": " + a.getCurrentBalance() + "\n";
 				return s;
 			}
-			else{return x;}
 		}
 		return s;
 	}
