@@ -1,5 +1,6 @@
 package newbank.server;
 
+import java.io.*;
 import java.util.HashMap;
 
 public class NewBank {
@@ -38,11 +39,21 @@ public class NewBank {
 	}
 
 	// commands from the NewBank customer are processed in this method
-	public synchronized String processRequest(CustomerID customer, String request) {
+	public synchronized String processRequest(CustomerID customer, String request, BufferedReader in, PrintWriter out) {
 		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
-			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			switch(request.toLowerCase()) {
+			case "show my accounts" : return showMyAccounts(customer);
 			default : return "FAIL";
+			case "withdraw" : {out.println("Please select account from which you would like to withdraw: "
+			);
+			out.println(showMyAccounts(customer));
+			try {
+				String response = in.readLine();
+				return "" + withdrawTransaction(customers.get(customer.getKey()), 1200);
+			} catch (IOException e){
+				out.println("error");
+					}
+				}
 			}
 		}
 		return "FAIL";
@@ -51,5 +62,8 @@ public class NewBank {
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
+	private double withdrawTransaction(Customer customer,double amount){
 
+		return amount;
+	}
 }
