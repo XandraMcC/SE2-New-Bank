@@ -17,6 +17,28 @@ public class Customer {
 		}
 		return s;
 	}
+	public String AllCurrentBalanceToString(){
+		String s = "";
+		for(Account a : accounts){
+			s += a.getAccountName() + ": " + String.valueOf(a.getCurrentBalance()) + "\n";
+		}
+		return s;
+	}
+
+	public String CurrentBalanceToString(String A){
+		String x = "Error No Account Found";
+		String s = null;
+		for(Account a : accounts) {
+			if (a.getAccountName() == A){
+				s = a.getAccountName() + ": " + String.valueOf(a.getCurrentBalance()) + "\n";
+				return s;
+			}
+			else{return x;}
+		}
+		return s;
+	}
+
+
 
 	public void addAccount(Account account) {
 		accounts.add(account);		

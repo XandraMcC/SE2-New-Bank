@@ -10,11 +10,15 @@ public class Account {
 	public Account(String accountName, double openingBalance) {
 		this.accountName = accountName;
 		this.openingBalance = openingBalance;
-		openingBalance = currentBalance;
+		this.currentBalance = openingBalance;
 	}
 	
 	public String toString() {
 		return (accountName + ": " + openingBalance);
+	}
+
+	public String getAccountName() {
+		return accountName;
 	}
 
 	//Method to retrieve the current balance of an account.
