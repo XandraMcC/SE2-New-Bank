@@ -42,6 +42,7 @@ public class NewBank {
 	public synchronized String processRequest(CustomerID customer, String request, BufferedReader in, PrintWriter out) {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request.toLowerCase()) {
+				// options available
 				case "show my accounts" : return showMyAccounts(customer);
 				case "withdraw" : return "" +  withdrawTransaction(customer,in,out);
 				//case "deposit" : return depositTransaction();
@@ -66,15 +67,23 @@ public class NewBank {
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
+
+	String account;
+
+	private String showCurrentStatus(CustomerID customer) {
+		return (customers.get(customer.getKey())).currentBalance(account);
+	}
 	private double withdrawTransaction(CustomerID customer,BufferedReader in ,PrintWriter out){
 		out.println("Please select account from which you would like to withdraw: "
 		);
-			out.println(showMyAccounts(customer));
+			out.println(showMyAccounts(customer)); // this will change with the showAllCurrentBalances from AP;
 			try {
-				String account = in.readLine();
+				//set the account to transact on from user input
+				account = in.readLine();
 			out.println("How much would you like to withdraw: ");
 			double withdrawlAmount = Double.parseDouble(in.readLine());
 
+			//Creating customer_ob inn order to access getCurrentBalance
 			Customer customer_obj = customers.get(customer.getKey());
 			Account account_obj =  customer_obj.getTransactionAccount(account);
 
