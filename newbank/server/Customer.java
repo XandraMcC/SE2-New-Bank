@@ -18,7 +18,26 @@ public class Customer {
 		return s;
 	}
 
+	public Account getTransactionAccount(String accountName){
+		Account account = null;
+		for(Account a : accounts) {
+			if (accountName.equals(a.getAccountName())){
+				account = a;
+			}
+		}
+		return account;
+	}
+
 	public void addAccount(Account account) {
 		accounts.add(account);		
 	}
+
+	public void updateAccount(Account account){
+		for(int i =0; i <accounts.size(); i ++) {
+			if (account.getAccountName().equals(accounts.get(i).getAccountName())){
+				accounts.set(i,account);
+			}
+		}
+	}
 }
+
