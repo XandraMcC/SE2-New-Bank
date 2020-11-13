@@ -3,14 +3,10 @@ package newbank.server;
 import java.util.ArrayList;
 
 public class Customer {
-
-	private String name;
-	private String password;
+	
 	private ArrayList<Account> accounts;
 	
-	public Customer(String name, String password) {
-		this.name = name;
-		this.password = password;
+	public Customer() {
 		accounts = new ArrayList<>();
 	}
 	
@@ -24,13 +20,5 @@ public class Customer {
 
 	public void addAccount(Account account) {
 		accounts.add(account);		
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 }
