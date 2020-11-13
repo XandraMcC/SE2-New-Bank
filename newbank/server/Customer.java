@@ -1,9 +1,11 @@
 package newbank.server;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class Customer {
-	
+
+	private String password;
 	private ArrayList<Account> accounts;
 	
 	public Customer() {
@@ -20,5 +22,19 @@ public class Customer {
 
 	public void addAccount(Account account) {
 		accounts.add(account);		
+	}
+
+	/**
+	 * Updates customer's password
+	 *
+	 * @param password new value
+	 * @throws InvalidParameterException if password is 4 characters or less
+	 */
+	public void updatePassword(String password) throws InvalidParameterException {
+		if (password.length() > 4) {
+			this.password = password;
+		} else {
+			throw new InvalidParameterException();
+		}
 	}
 }

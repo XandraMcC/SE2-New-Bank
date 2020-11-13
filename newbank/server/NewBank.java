@@ -39,15 +39,42 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
-		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
-			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			default : return "FAIL";
+		if (!customers.containsKey(customer.getKey())) {
+			return "FAIL";
+		}
+		String[] arguments = request.split(" ");
+		if (arguments.length >= 1) {
+			switch (arguments[0]) {
+				case "SHOWMYACCOUNTS":
+					return showMyAccounts(customer);
+				case "CHANGEPASSWORD":
+					if (arguments.length >= 2) {
+						return changePassword(customer, arguments[1]);
+					} else {
+						return "FAIL New password not specified";
+					}
+
 			}
 		}
 		return "FAIL";
 	}
-	
+
+	/**
+	 * Updates a customers password
+	 *
+	 * @param customer the customerID to be updated
+	 * @param newPassword must be longer than 4 characters
+	 * @return a status message for display to the user
+	 */
+	private String changePassword(CustomerID customer, String newPassword) {
+		try {
+			customers.get(customer.getKey()).updatePassword(newPassword);
+			return "Password updated";
+		} catch (Exception e) {
+			return "FAIL password not updated";
+		}
+	}
+
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
