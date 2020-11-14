@@ -24,6 +24,7 @@ public class NewBank {
 
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
+		john.addAccount(new Account("Savings", 111));
 		customers.put("John", john);
 	}
 
@@ -45,19 +46,8 @@ public class NewBank {
 				// options available
 				case "show my accounts" : return showMyAccounts(customer);
 				case "withdraw" : return "" +  withdrawTransaction(customer,in,out);
-				//case "deposit" : return depositTransaction();
+				case "deposit" : return "" +  depositTransaction(customer, in, out);
 
-
-				/*case "deposit" : {out.println("Please select account to which you would like to deposit: "
-				);
-					out.println(showMyAccounts(customer));
-					try {
-						String response = in.readLine();
-						return "" + depositTransaction(customers.get(customer.getKey()), 1200) + " Please enter deposit amount";
-					} catch (IOException e){
-						out.println("error");
-					}
-				} */
 				default : return "FAIL";
 			}
 		}
@@ -73,6 +63,7 @@ public class NewBank {
 	private String showCurrentStatus(CustomerID customer) {
 		return (customers.get(customer.getKey())).currentBalance(account);
 	}
+
 	private double withdrawTransaction(CustomerID customer,BufferedReader in ,PrintWriter out){
 		out.println("Please select account from which you would like to withdraw: "
 		);
@@ -86,9 +77,10 @@ public class NewBank {
 			//Creating customer_ob inn order to access getCurrentBalance
 			Customer customer_obj = customers.get(customer.getKey());
 			Account account_obj =  customer_obj.getTransactionAccount(account);
-
+			// update current balance after withdrawl
 			account_obj.setCurrentBalance(account_obj.getCurrentBalance() - withdrawlAmount);
 			customer_obj.updateAccount(account_obj);
+				out.println("your new balance on your " + account + " account is:");
 				return  account_obj.getCurrentBalance();
 
 			} catch (IOException e){
@@ -96,8 +88,7 @@ public class NewBank {
 			}
 		return 0;
 	}
-
-	/*private double depositTransaction(Customer customer, double amount){
-		return amount;
-	}*/
+	private double depositTransaction(CustomerID customer,BufferedReader in ,PrintWriter out) {
+		return 0;
+	}
 }
