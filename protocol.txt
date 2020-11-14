@@ -17,3 +17,7 @@ Returns SUCCESS or FAIL
 PAY <Person/Company> <Ammount>
 e.g. PAY John 100
 Returns SUCCESS or FAIL
+
+UPDATEPASSWORD <New password>
+e.g. UPDATEPASSWORD letmein
+Sets password to 'letmein', returns FAIL if password is insufficiently complex
