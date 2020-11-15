@@ -1,7 +1,5 @@
 package newbank.server;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 
 public class NewBank {
@@ -46,14 +44,16 @@ public class NewBank {
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
 		}
-		String[] arguments = request.split(" ");
-		if (arguments.length >= 1) {
-			switch (arguments[0]) {
+		String[] UserInputs = request.split(" ");
+		if (UserInputs.length >= 1) {
+			switch (UserInputs[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
+				case "DEPOSIT":
+					return depositTransaction(customer, UserInputs[1],UserInputs[2]);
 				case "CHANGEPASSWORD":
-					if (arguments.length >= 2) {
-						return changePassword(customer, arguments[1]);
+					if (UserInputs.length >= 2) {
+						return changePassword(customer, UserInputs[1]);
 					} else {
 						return "FAIL New password not specified";
 					}
@@ -81,6 +81,12 @@ public class NewBank {
 
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
+	}
+
+	// method to deposit money, takes account type and amount to deposit
+	// accesses the Deposit method in Customer which returns correct format for this function
+	private String depositTransaction(CustomerID customer,String accType ,String amount){
+		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
 }
