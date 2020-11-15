@@ -1,6 +1,7 @@
 package newbank.server;
 
 import java.io.*;
+
 import java.util.HashMap;
 
 public class NewBank {
@@ -57,6 +58,8 @@ public class NewBank {
 			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
+				case "DEPOSIT":
+					return depositTransaction(customer, arguments[1],arguments[2]);
 				case "CHANGEPASSWORD":
 					if (arguments.length >= 2) {
 						return changePassword(customer, arguments[1]);
@@ -93,6 +96,12 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
+	// method to deposit money, takes account type and amount to deposit
+	// accesses the Deposit method in Customer which returns correct format for this function
+	private String depositTransaction(CustomerID customer,String accType ,String amount){
+		return (customers.get(customer.getKey()).Deposit(accType, amount));
+	}
+
 	private String showCurrentStatus(CustomerID customer) {
 		return (customers.get(customer.getKey())).currentBalance(account);
 	}
@@ -102,3 +111,4 @@ public class NewBank {
 	}
 
 }
+

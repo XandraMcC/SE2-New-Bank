@@ -19,6 +19,10 @@ public class Account {
 		return(accountName);
 	}
 
+	public String getAccountName(){
+		return(accountName);
+	}
+
 	/**
 	 * Method to retrieve the current balance of an account.
 	 * @return currentBalance

@@ -27,6 +27,20 @@ public class Customer {
 		accounts.add(account);
 	}
 
+
+	// Creates a method for a deposit which can be accessed in NewBank
+	public String Deposit(String accType, String amount){
+
+		String s = null;
+		for (Account a : accounts) {
+			if (a.getAccountName().equals(accType)) {
+				s = a.getAccountName() + ": " + (a.getCurrentBalance() + Double.parseDouble(amount));
+				return s;
+			}
+		}
+		return s;
+	}
+
 	/**
 	 * Updates customer's password
 	 *
