@@ -1,7 +1,5 @@
 package newbank.server;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 
 public class NewBank {
