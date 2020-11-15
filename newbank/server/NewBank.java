@@ -41,17 +41,28 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request, BufferedReader in, PrintWriter out) {
-		if(customers.containsKey(customer.getKey())) {
-			switch(request.toLowerCase()) {
-				// options available
-				case "show my accounts" : return showMyAccounts(customer);
-				case "withdraw" : return "" +  withdrawTransaction(customer,in,out);
-				case "deposit" : return "" +  depositTransaction(customer, in, out);
+		if (!customers.containsKey(customer.getKey())) {
+			return "FAIL";
+		}
+
+		String[] UserInputs = request.split(" "); //split by spaces
+		if (UserInputs.length < 1) {
+			return "FAIL";
+		}
+
+		switch(UserInputs[0]){
+			// options available
+			case "SHOWMYACCOUNTS" :
+				return showMyAccounts(customer);
+
+			case "WITHDRAW" :
+				return withdrawTransaction(customer,UserInputs[1],UserInputs[2]);
+
+			case "deposit" :
+				return withdrawTransaction(customer,UserInputs[1],UserInputs[2]);
 
 				default : return "FAIL";
-			}
 		}
-		return "FAIL";
 	}
 
 	private String showMyAccounts(CustomerID customer) {
@@ -64,30 +75,11 @@ public class NewBank {
 		return (customers.get(customer.getKey())).currentBalance(account);
 	}
 
-	private double withdrawTransaction(CustomerID customer,BufferedReader in ,PrintWriter out){
-		out.println("Please select account from which you would like to withdraw: "
-		);
-			out.println(showMyAccounts(customer)); // this will change with the showAllCurrentBalances from AP;
-			try {
-				//set the account to transact on from user input
-				account = in.readLine();
-			out.println("How much would you like to withdraw: ");
-			double withdrawlAmount = Double.parseDouble(in.readLine());
+	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
 
-			//Creating customer_ob inn order to access getCurrentBalance
-			Customer customer_obj = customers.get(customer.getKey());
-			Account account_obj =  customer_obj.getTransactionAccount(account);
-			// update current balance after withdrawl
-			account_obj.setCurrentBalance(account_obj.getCurrentBalance() - withdrawlAmount);
-			customer_obj.updateAccount(account_obj);
-				out.println("your new balance on your " + account + " account is:");
-				return  account_obj.getCurrentBalance();
-
-			} catch (IOException e){
-				out.println("error");
-			}
-		return 0;
+		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
+
 	private double depositTransaction(CustomerID customer,BufferedReader in ,PrintWriter out) {
 		return 0;
 	}

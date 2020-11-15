@@ -42,7 +42,17 @@ public class Customer {
 		return s;
 	}
 
+	public String Withdraw(String accType, String amount){
 
+		String s = null;
+		for (Account a : accounts) {
+			if (a.getAccountName().equals(accType)) {
+				s = a.getAccountName() + ": " + (a.getCurrentBalance() - Double.parseDouble(amount));
+				return s;
+			}
+		}
+		return s;
+	}
 
 	public void addAccount(Account account) {
 		accounts.add(account);		
