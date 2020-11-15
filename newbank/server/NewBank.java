@@ -7,6 +7,7 @@ public class NewBank {
 
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
+	private String account;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -14,18 +15,18 @@ public class NewBank {
 	}
 
 	private void addTestData() {
-		Customer bhagy = new Customer();
+		Customer bhagy = new Customer("Bhagy", "bhagy");
 		bhagy.addAccount(new Account("Main", 1000.0));
-		customers.put("Bhagy", bhagy);
+		customers.put(bhagy.getName(), bhagy);
 
-		Customer christina = new Customer();
+		Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
-		customers.put("Christina", christina);
+		customers.put(christina.getName(), christina);
 
-		Customer john = new Customer();
+		Customer john = new Customer("John", "john");
 		john.addAccount(new Account("Checking", 250.0));
 		john.addAccount(new Account("Savings", 111));
-		customers.put("John", john);
+		customers.put(john.getName(), john);
 	}
 
 	public static NewBank getBank() {
@@ -34,34 +35,53 @@ public class NewBank {
 
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if(customers.containsKey(userName)) {
-			return new CustomerID(userName);
+			if (customers.get(userName).getPassword().equals(password)) {
+				return new CustomerID(userName);
+			}
 		}
 		return null;
 	}
 
-	// commands from the NewBank customer are processed in this method
-	public synchronized String processRequest(CustomerID customer, String request, BufferedReader in, PrintWriter out) {
+	/**
+	 * commands from the NewBank customer are processed in this method
+	 * @param customer
+	 * @param request
+	 * @return
+	 */
+	public synchronized String processRequest(CustomerID customer, String request) {
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
 		}
+		String[] arguments = request.split(" ");
+		if (arguments.length >= 1) {
+			switch (arguments[0]) {
+				case "SHOWMYACCOUNTS":
+					return showMyAccounts(customer);
+				case "CHANGEPASSWORD":
+					if (arguments.length >= 2) {
+						return changePassword(customer, arguments[1]);
+					} else {
+						return "FAIL New password not specified";
+					}
 
-		String[] UserInputs = request.split(" "); //split by spaces
-		if (UserInputs.length < 1) {
-			return "FAIL";
+			}
 		}
+		return "FAIL";
+	}
 
-		switch(UserInputs[0]){
-			// options available
-			case "SHOWMYACCOUNTS" :
-				return showMyAccounts(customer);
-
-			case "WITHDRAW" :
-				return withdrawTransaction(customer,UserInputs[1],UserInputs[2]);
-
-			case "deposit" :
-				return withdrawTransaction(customer,UserInputs[1],UserInputs[2]);
-
-			default : return "FAIL";
+	/**
+	 * Updates a customers password
+	 *
+	 * @param customer the customerID to be updated
+	 * @param newPassword must be longer than 4 characters
+	 * @return a status message for display to the user
+	 */
+	private String changePassword(CustomerID customer, String newPassword) {
+		try {
+			customers.get(customer.getKey()).updatePassword(newPassword);
+			return "Password updated";
+		} catch (Exception e) {
+			return "FAIL password not updated";
 		}
 	}
 
@@ -69,14 +89,11 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	String account;
-
 	private String showCurrentStatus(CustomerID customer) {
 		return (customers.get(customer.getKey())).currentBalance(account);
 	}
 
 	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
-
 		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
 
