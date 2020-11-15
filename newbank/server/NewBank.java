@@ -63,6 +63,10 @@ public class NewBank {
 					} else {
 						return "FAIL New password not specified";
 					}
+				case "WITHDRAW":
+					return withdrawTransaction(customer, arguments[1], arguments[2]);
+				case "SHOWSTATUS":
+					return showCurrentStatus(customer);
 
 			}
 		}
@@ -97,7 +101,4 @@ public class NewBank {
 		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
 
-	private double depositTransaction(CustomerID customer,BufferedReader in ,PrintWriter out) {
-		return 0;
-	}
 }
