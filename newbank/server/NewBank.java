@@ -44,16 +44,16 @@ public class NewBank {
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
 		}
-		String[] UserInputs = request.split(" ");
-		if (UserInputs.length >= 1) {
-			switch (UserInputs[0]) {
+		String[] arguments = request.split(" ");
+		if (arguments.length >= 1) {
+			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
 				case "DEPOSIT":
-					return depositTransaction(customer, UserInputs[1],UserInputs[2]);
+					return depositTransaction(customer, arguments[1],arguments[2]);
 				case "CHANGEPASSWORD":
-					if (UserInputs.length >= 2) {
-						return changePassword(customer, UserInputs[1]);
+					if (arguments.length >= 2) {
+						return changePassword(customer, arguments[1]);
 					} else {
 						return "FAIL New password not specified";
 					}
