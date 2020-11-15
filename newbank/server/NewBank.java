@@ -1,35 +1,39 @@
 package newbank.server;
 
+import java.io.*;
+
 import java.util.HashMap;
 
 public class NewBank {
-	
+
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	
+	private String account;
+
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
 	}
-	
+
 	private void addTestData() {
 		Customer bhagy = new Customer("Bhagy", "bhagy");
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put(bhagy.getName(), bhagy);
-		
+
 		Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
 		customers.put(christina.getName(), christina);
-		
+
 		Customer john = new Customer("John", "john");
 		john.addAccount(new Account("Checking", 250.0));
+		john.addAccount(new Account("Savings", 111));
 		customers.put(john.getName(), john);
 	}
-	
+
 	public static NewBank getBank() {
 		return bank;
 	}
-	
+
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if(customers.containsKey(userName)) {
 			if (customers.get(userName).getPassword().equals(password)) {
@@ -39,7 +43,12 @@ public class NewBank {
 		return null;
 	}
 
-	// commands from the NewBank customer are processed in this method
+	/**
+	 * commands from the NewBank customer are processed in this method
+	 * @param customer
+	 * @param request
+	 * @return
+	 */
 	public synchronized String processRequest(CustomerID customer, String request) {
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
@@ -57,6 +66,10 @@ public class NewBank {
 					} else {
 						return "FAIL New password not specified";
 					}
+				case "WITHDRAW":
+					return withdrawTransaction(customer, arguments[1], arguments[2]);
+				case "SHOWSTATUS":
+					return showCurrentStatus(customer);
 
 			}
 		}
@@ -89,4 +102,13 @@ public class NewBank {
 		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
+	private String showCurrentStatus(CustomerID customer) {
+		return (customers.get(customer.getKey())).currentBalance(account);
+	}
+
+	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
+		return (customers.get(customer.getKey()).Withdraw(accType, amount));
+	}
+
 }
+

@@ -62,4 +62,56 @@ public class Customer {
 	public String getPassword() {
 		return password;
 	}
+
+	/**
+	 * Method to allow access to update account balances
+	 * @param account
+	 */
+	public void updateAccount(Account account){
+		for(int i =0; i <accounts.size(); i ++) {
+			if (account.getAccountName().equals(accounts.get(i).getAccountName())){
+				accounts.set(i,account);
+			}
+		}
+	}
+
+	/**
+	 * Method to allow account to be transacted upon to be accessed
+	 * @param accountName
+	 * @return
+	 */
+	public Account getTransactionAccount(String accountName) {
+		Account account = null;
+		for (Account a : accounts) {
+			if (accountName.equals(a.getAccountName())) {
+				account = a;
+			}
+		}
+		return account;
+	}
+
+	/**
+	 * Method to return the current balance
+	 * @param accountType
+	 * @return
+	 */
+	public String currentBalance(String accountType) {
+		for (Account a : accounts) {
+			if (a.getAccountName().equals(accountType)) {
+				String s = a.getAccountName() + ": " + a.getCurrentBalance();
+				return s;
+			}
+		}
+		return null;
+	}
+
+	public String Withdraw(String accType, String amount){
+		for (Account a : accounts) {
+			if (a.getAccountName().equals(accType)) {
+				String s = a.getAccountName() + ": " + (a.getCurrentBalance() - Double.parseDouble(amount));
+				return s;
+			}
+		}
+		return null;
+	}
 }
