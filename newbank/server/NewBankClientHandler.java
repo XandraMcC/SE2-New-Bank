@@ -47,6 +47,12 @@ public class NewBankClientHandler extends Thread {
 				} else if (customer != null) {
 					// if the user is authenticated then get requests from the user and process them
 					out.println("What do you want to do?");
+					out.println("SHOWMYACCOUNTS");
+					out.println("WITHDRAW");
+					out.println("DEPOSIT");
+					out.println("INTERNALTRANSFER");
+					out.println("EXTERNALTRANSFER");
+					out.println("LOANMARKET");
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
 					String response = bank.processRequest(customer, request);
