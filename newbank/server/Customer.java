@@ -19,16 +19,15 @@ public class Customer {
 	}
 
 	//Method to get current balance of specific account type.
-	public String CurrentBalanceToString(String A){ //Parameter A is the chosen account type.
-		String x = "Error No Account Found"; // Still Needs work.
-		String s = null;
-		for(Account a : accounts) { //Cycle through each of the customers accounts.
-			if (a.getAccountName().equals(A)){ // If the chosen account is matched with an actual account balance is returned.
-				s = a.getAccountName() + ": " + a.getCurrentBalance() + "\n";
-				return s;
+	public String CurrentBalanceToString(String AccType){ //Parameter A is the chosen account type.
+		String NoACC = "Error No Account Found";
+		for(Account all : accounts) { //Cycle through each of the customers accounts.
+			if (all.getAccountName().equals(AccType)){ // If the chosen account is matched with an actual account balance is returned.
+				String currBAL = all.getAccountName() + ": " + all.getCurrentBalance() + "\n";
+				return currBAL;
 			}
 		}
-		return s;
+		return NoACC; //If no account is found with that name return error.
 	}
 
 

@@ -23,8 +23,6 @@ public class NewBank {
 		
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
-		john.addAccount(new Account("Main", 1250.0));
-		john.addAccount(new Account("Savings", 50.0));
 		customers.put("John", john);
 	}
 	
@@ -40,32 +38,34 @@ public class NewBank {
 	}
 	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
 
-	// commands from the NewBank customer are processed in this method
+
+	/**
+	 * commands from the NewBank customer are processed in this method
+	 *
+	 */
 	public synchronized String processRequest(CustomerID customer, String request) {
-		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
-			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-
-
-			//The Next three cases deal with getting the current balance for a specific account type.
-			case "Show Current Balance for Main" :
-				AccountType = "Main";
-				return ShowMyBal(customer, AccountType);
-
-			case "Show Current Balance for Checking" :
-				AccountType = "Checking";
-				return ShowMyBal(customer, AccountType);
-
-			case "Show Current Balance for Savings" :
-				AccountType = "Savings";
-				return ShowMyBal(customer, AccountType);
-
-			default : return "FAIL";
-			}
-
-
+		if (!customers.containsKey(customer.getKey())) {
+			return "FAIL";
 		}
-		return "FAIL";
+
+		String [] UserInputs = request.split(" "); //Using spaces to split a user inputted line.
+		if (UserInputs.length < 1){ // If user doesn't enter anything.
+			return "No Input";
+		}
+
+		switch(UserInputs[0]) { //Takes the first index of UserInputs, it is the action requested from user.
+		case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+
+		case "SHOWCURRENTBALANCE":
+			if (UserInputs.length == 2){
+				return ShowMyBal(customer, UserInputs[1]); //Passes the account type to ShowMyBal to get curr bal.
+			}
+			return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after.
+
+		default : return "FAIL";
+		}
+
+
 	}
 	
 	private String showMyAccounts(CustomerID customer) {
@@ -73,6 +73,6 @@ public class NewBank {
 	}
 
 	//Handles retrieving the current balance for specific type of account.
-	private String ShowMyBal(CustomerID customer, String A){return (customers.get(customer.getKey())).CurrentBalanceToString(A);}
+	private String ShowMyBal(CustomerID customer, String AccType){return (customers.get(customer.getKey())).CurrentBalanceToString(AccType);}
 
 }
