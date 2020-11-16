@@ -4,8 +4,8 @@ public class Account {
 
 	private String accountName;
 	private double openingBalance;
-	private double currentBalance;
-
+	private double currentBalance; // New Double variable to store account's current balance.
+  
 	public Account(String accountName, double openingBalance) {
 		this.accountName = accountName;
 		this.openingBalance = openingBalance;
@@ -15,10 +15,11 @@ public class Account {
 	public String toString() {
 		return (accountName + ": " + openingBalance);
 	}
-	public String getAccountName(){
-		return(accountName);
-	}
 
+	public String getAccountName() {
+		return accountName;
+	}
+  
 	/**
 	 * Method to retrieve the current balance of an account.
 	 * @return currentBalance
