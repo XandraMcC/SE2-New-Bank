@@ -9,6 +9,7 @@ public class NewBank {
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
 	private String account;
+	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -42,7 +43,6 @@ public class NewBank {
 		}
 		return null;
 	}
-	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
 
 	/**
 	 * commands from the NewBank customer are processed in this method
@@ -71,15 +71,14 @@ public class NewBank {
 					return withdrawTransaction(customer, arguments[1], arguments[2]);
 				case "SHOWSTATUS":
 					return showCurrentStatus(customer);
-        case "SHOWCURRENTBALANCE":
-          if (arguments.length == 2){
-            return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
-          }
-          return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
-        default : 
-          return "FAIL";
-      }
+				case "SHOWCURRENTBALANCE":
+				  if (arguments.length == 2){
+					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
+				  }
+				  return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+      		}
 		}
+		return "FAIL";
 	}
   
 	/**
@@ -104,8 +103,8 @@ public class NewBank {
 
 	//Handles retrieving the current balance for specific type of account.
 	private String ShowMyBal(CustomerID customer, String AccType){
-    return (customers.get(customer.getKey())).CurrentBalanceToString(AccType);
-  }
+    	return (customers.get(customer.getKey())).CurrentBalanceToString(AccType);
+  	}
 
 	// method to deposit money, takes account type and amount to deposit
 	// accesses the Deposit method in Customer which returns correct format for this function
