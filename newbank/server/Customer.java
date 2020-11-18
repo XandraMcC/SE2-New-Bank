@@ -32,15 +32,15 @@ public class Customer {
 	 * @param amount
 	 * @return
 	 */
-	public String Deposit(String accType, String amount) {
+	public String Deposit(String accType, float amount) {
 		String s = null;
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
-				s = a.getAccountName() + ": " + (a.getCurrentBalance() + Double.parseDouble(amount));
-				return s;
+				a.setCurrentBalance(a.getCurrentBalance() + amount);
+				return "Deposited £" + amount + " to account " + a.getAccountName();
 			}
 		}
-		return s;
+		return "Account not found: " + accType;
 	}
 
 	/**
@@ -114,13 +114,16 @@ public class Customer {
 	}
 
 
-  public String Withdraw(String accType, String amount){
+	public String Withdraw(String accType, float amount) {
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
-				String s = a.getAccountName() + ": " + (a.getCurrentBalance() - Double.parseDouble(amount));
-				return s;
+				if (a.getCurrentBalance() < amount) {
+					return "Cannot withdraw £" + amount + " from " + a.getAccountName() + " not enough funds";
+				}
+				a.setCurrentBalance(a.getCurrentBalance() - amount);
+				return "Withdrew £" + amount + " from " + a.getAccountName();
 			}
 		}
-		return null;
+		return "Account not found: " + accType;
 	}
 }

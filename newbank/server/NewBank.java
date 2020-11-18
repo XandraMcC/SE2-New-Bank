@@ -119,13 +119,13 @@ public class NewBank {
 	 * @return
 	 */
 	private String depositTransaction(CustomerID customer,String accType ,String amount) {
-		return (customers.get(customer.getKey()).Deposit(accType, amount));
+		return (customers.get(customer.getKey()).Deposit(accType, Float.valueOf(amount)));
 	}
 
   private String showCurrentStatus(CustomerID customer) {
 		return (customers.get(customer.getKey())).currentBalance(account);
 	}
 	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
-		return (customers.get(customer.getKey()).Withdraw(accType, amount));
+		return (customers.get(customer.getKey()).Withdraw(accType, Float.valueOf(amount)));
 	}
 }
