@@ -1,12 +1,12 @@
 package newbank.server;
-import java.io.*;
 
 import java.util.HashMap;
+
 public class NewBank {
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
 	private String account;
-	public String AccountType; //New string to help with type of account typed in by user - useful for currentbalance and possibly more.
+	public String AccountType;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -18,7 +18,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put(bhagy.getName(), bhagy);
 
-    Customer christina = new Customer("Christina", "christina");
+    	Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
 		customers.put(christina.getName(), christina);
 
@@ -48,10 +48,12 @@ public class NewBank {
 	 * @return
 	 */
 	public synchronized String processRequest(CustomerID customer, String request) {
+		String[] arguments = request.split(" ");
+
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
 		}
-		String[] arguments = request.split(" ");
+
 		if (arguments.length >= 1) {
 			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
@@ -69,7 +71,7 @@ public class NewBank {
 				case "SHOWSTATUS":
 					return showCurrentStatus(customer);
 				case "SHOWCURRENTBALANCE":
-					if (arguments.length == 2){
+					if (arguments.length == 2) {
 						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
 					}
 					return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
@@ -97,15 +99,26 @@ public class NewBank {
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
-	//Handles retrieving the current balance for specific type of account.
-	private String ShowMyBal(CustomerID customer, String AccType){
-		return (customers.get(customer.getKey())).currentBalance(AccType);
-  // return (customers.get(customer.getKey())).CurrentBalanceToString(AccType);
+
+	/**
+	 * Handles retrieving the current balance for specific type of account.
+	 * @param customer
+	 * @param accType
+	 * @return
+	 */
+	private String ShowMyBal(CustomerID customer, String accType) {
+   		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
 
-	// method to deposit money, takes account type and amount to deposit
-	// accesses the Deposit method in Customer which returns correct format for this function
-	private String depositTransaction(CustomerID customer,String accType ,String amount){
+	/**
+	 * method to deposit money, takes account type and amount to deposit
+	 * accesses the Deposit method in Customer which returns correct format for this function
+	 * @param customer
+	 * @param accType
+	 * @param amount
+	 * @return
+	 */
+	private String depositTransaction(CustomerID customer,String accType ,String amount) {
 		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
