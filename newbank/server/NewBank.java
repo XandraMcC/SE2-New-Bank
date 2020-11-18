@@ -30,10 +30,10 @@ public class NewBank {
 		john.addAccount(new Account("Savings", 111));
 		customers.put(john.getName(), john);
 
-		Customer Manager = new Customer("MANAGER", "manager");
-		john.addAccount(new Account("Checking", 250.0));
-		john.addAccount(new Account("Savings", 111));
-		customers.put(john.getName(), john);
+		Customer manager = new Customer("MANAGER", "manager");
+		manager.addAccount(new Account("Checking", 250.0));
+		manager.addAccount(new Account("Savings", 111));
+		customers.put(manager.getName(), manager);
 	}
 
 	public static NewBank getBank() {
