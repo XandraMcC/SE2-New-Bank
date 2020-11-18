@@ -66,37 +66,32 @@ public class NewBank {
 					return showMyAccounts(customer);
 
 				case "DEPOSIT":
-					if (arguments.length ==3) {
+					if (arguments.length >=3) {
 						return depositTransaction(customer, arguments[1], arguments[2]);
 					}
-					else {
-						return "Invalid instruction. Please try again.";
-					}
+					return "FAIL Invalid instruction. Please try again.";
 
 				case "WITHDRAW":
-					if(arguments.length == 3) {
+					if(arguments.length >= 3) {
 						return withdrawTransaction(customer, arguments[1], arguments[2]);
 					}
-					else {
-						return "Invalid instruction. Please try again.";
-					}
+					return "FAIL Invalid instruction. Please try again.";
 
 				case "CHANGEPASSWORD":
 					if (arguments.length >= 2) {
 						return changePassword(customer, arguments[1]);
-					} else {
-						return "FAIL New password not specified";
 					}
+					return "FAIL New password not specified";
 
 				case "SHOWSTATUS":
 					return showCurrentStatus(customer);
 
 				case "SHOWCURRENTBALANCE":
-				  if (arguments.length == 2){
+				  if (arguments.length >= 2){
 					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
 				  }
-				  return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
-      		}
+				  return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+      			}
 		}
 		return "Invalid Instruction. Please try again.";
 	}
