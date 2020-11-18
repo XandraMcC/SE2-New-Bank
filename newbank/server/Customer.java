@@ -81,13 +81,24 @@ public class Customer {
 	 * @return
 	 */
 	public String currentBalance(String accountType) {
-		for (Account a : accounts) {
-			if (a.getAccountName().equals(accountType)) {
-				String s = a.getAccountName() + ": " + a.getCurrentBalance();
-				return s;
+		if (accountType.equals("ALL")){
+			String allBAL = "";
+			for (Account allACC : accounts){
+				allBAL += allACC.getAccountName() + ": " + allACC.getCurrentBalance() + "\n";
 			}
+			return allBAL;
 		}
-		return null;
+		else {
+			for (Account a : accounts) {
+				if (a.getAccountName().equals(accountType)) {
+					String s = a.getAccountName() + ": " + a.getCurrentBalance();
+					return s;
+				}
+
+
+			}
+			return "Error Account type not found.";
+		}
 	}
 	public String Withdraw(String accType, String amount){
 		for (Account a : accounts) {
