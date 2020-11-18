@@ -103,12 +103,11 @@ public class NewBank {
 	/**
 	 * Handles retrieving the current balance for specific type of account.
 	 * @param customer
-	 * @param AccType
+	 * @param accType
 	 * @return
 	 */
-	private String ShowMyBal(CustomerID customer, String AccType) {
-		// return (customers.get(customer.getKey())).currentBalance(AccType);
-   		return (customers.get(customer.getKey())).CurrentBalanceToString(AccType);
+	private String ShowMyBal(CustomerID customer, String accType) {
+   		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
 
 	/**
