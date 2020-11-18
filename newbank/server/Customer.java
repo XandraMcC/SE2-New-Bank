@@ -94,8 +94,6 @@ public class Customer {
 					String s = a.getAccountName() + ": " + a.getCurrentBalance();
 					return s;
 				}
-
-
 			}
 			return "Error Account type not found.";
 		}
@@ -108,5 +106,15 @@ public class Customer {
 			}
 		}
 		return null;
+	}
+
+	public String newACC(String accType, double Amount) {
+		for (Account a : accounts){
+			if (a.getAccountName().equals(accType)){
+				return "Account Type Already Exists " + currentBalance(accType);
+			}
+		}
+		addAccount(new Account(accType, Amount));
+		return "New Account Added " + currentBalance(accType);
 	}
 }
