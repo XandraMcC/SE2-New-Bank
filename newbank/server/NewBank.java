@@ -29,6 +29,11 @@ public class NewBank {
 		john.addAccount(new Account("Checking", 250.0));
 		john.addAccount(new Account("Savings", 111));
 		customers.put(john.getName(), john);
+
+		Customer Manager = new Customer("MANAGER", "manager");
+		john.addAccount(new Account("Checking", 250.0));
+		john.addAccount(new Account("Savings", 111));
+		customers.put(john.getName(), john);
 	}
 
 	public static NewBank getBank() {
@@ -59,18 +64,33 @@ public class NewBank {
 			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
+
 				case "DEPOSIT":
-					return depositTransaction(customer, arguments[1],arguments[2]);
+					if (arguments.length ==3) {
+						return depositTransaction(customer, arguments[1], arguments[2]);
+					}
+					else {
+						return "Invalid instruction. Please try again.";
+					}
+
+				case "WITHDRAW":
+					if(arguments.length == 3) {
+						return withdrawTransaction(customer, arguments[1], arguments[2]);
+					}
+					else {
+						return "Invalid instruction. Please try again.";
+					}
+
 				case "CHANGEPASSWORD":
 					if (arguments.length >= 2) {
 						return changePassword(customer, arguments[1]);
 					} else {
 						return "FAIL New password not specified";
 					}
-				case "WITHDRAW":
-					return withdrawTransaction(customer, arguments[1], arguments[2]);
+
 				case "SHOWSTATUS":
 					return showCurrentStatus(customer);
+
 				case "SHOWCURRENTBALANCE":
 				  if (arguments.length == 2){
 					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
@@ -78,7 +98,7 @@ public class NewBank {
 				  return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
       		}
 		}
-		return "FAIL";
+		return "Invalid Instruction. Please try again.";
 	}
   
 	/**

@@ -45,6 +45,11 @@ public class NewBankClientHandler extends Thread {
 					customer = handleLogin();
 					loginAttempts++;
 				} else if (customer != null) {
+					try {
+						Thread.sleep(2 * 1000);
+					} catch (InterruptedException ie) {
+						Thread.currentThread().interrupt();
+					}
 					// if the user is authenticated then get requests from the user and process them
 					out.println("What do you want to do?");
 					out.println("SHOWMYACCOUNTS");
