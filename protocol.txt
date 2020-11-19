@@ -14,9 +14,14 @@ MOVE <Amount> <From> <To>
 e.g. MOVE 100 Main Savings 
 Returns SUCCESS or FAIL
 
-PAY <Person/Company> <Ammount>
-e.g. PAY John 100
-Returns SUCCESS or FAIL
+SHOWCURRENTBALANCE <Account Type>
+e.g. SHOWCURRENTBALANCE Checking
+Can also type ALL to get current balance for all acc types
+Returns Account type + current balance
+
+MAKEAPAYMENT <Account type> <Payee> <Payee Account> <Ammount>
+e.g. MAKEAPAYMENT John Checking Bhagy Main 100
+Returns Account paid from + it's new balance + payee name + account + its new balance
 
 UPDATEPASSWORD <New password>
 e.g. UPDATEPASSWORD letmein
