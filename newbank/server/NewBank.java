@@ -3,10 +3,9 @@ package newbank.server;
 import java.util.HashMap;
 
 public class NewBank {
+
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	private String account;
-	public String AccountType;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -26,6 +25,11 @@ public class NewBank {
 		john.addAccount(new Account("Checking", 250.0));
 		john.addAccount(new Account("Savings", 111));
 		customers.put(john.getName(), john);
+
+		Customer manager = new Customer("MANAGER", "manager");
+		manager.addAccount(new Account("Checking", 250.0));
+		manager.addAccount(new Account("Savings", 111));
+		customers.put(manager.getName(), manager);
 	}
 
 	public static NewBank getBank() {
@@ -48,36 +52,42 @@ public class NewBank {
 	 * @return
 	 */
 	public synchronized String processRequest(CustomerID customer, String request) {
-		String[] arguments = request.split(" ");
-
 		if (!customers.containsKey(customer.getKey())) {
 			return "FAIL";
 		}
-
+		String[] arguments = request.split(" ");
 		if (arguments.length >= 1) {
 			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
 				case "DEPOSIT":
-					return depositTransaction(customer, arguments[1],arguments[2]);
+					if (arguments.length >=3) {
+						return depositTransaction(customer, arguments[1], arguments[2]);
+					}
+					return "FAIL Invalid instruction. Please try again.";
+				case "WITHDRAW":
+					if(arguments.length >= 3) {
+						return withdrawTransaction(customer, arguments[1], arguments[2]);
+					}
+					return "FAIL Invalid instruction. Please try again.";
 				case "CHANGEPASSWORD":
 					if (arguments.length >= 2) {
 						return changePassword(customer, arguments[1]);
-					} else {
-						return "FAIL New password not specified";
 					}
-				case "WITHDRAW":
-					return withdrawTransaction(customer, arguments[1], arguments[2]);
+					return "FAIL New password not specified";
 				case "SHOWSTATUS":
-					return showCurrentStatus(customer);
-				case "SHOWCURRENTBALANCE":
-					if (arguments.length == 2) {
-						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
+					if (arguments.length >= 2) {
+						return showCurrentStatus(customer, arguments[1]);
 					}
-					return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
-			}
+					return "FAIL Account not specified";
+				case "SHOWCURRENTBALANCE":
+				  if (arguments.length >= 2){
+					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
+				  }
+				  return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+      			}
 		}
-		return "FAIL";
+		return "FAIL Invalid Instruction. Please try again.";
 	}
 
 	/**
@@ -118,14 +128,16 @@ public class NewBank {
 	 * @param amount
 	 * @return
 	 */
-	private String depositTransaction(CustomerID customer,String accType ,String amount) {
-		return (customers.get(customer.getKey()).Deposit(accType, Float.valueOf(amount)));
+	private String depositTransaction(CustomerID customer, String accType, String amount) {
+		return (customers.get(customer.getKey()).Deposit(accType, Float.parseFloat(amount)));
 	}
 
-  private String showCurrentStatus(CustomerID customer) {
-		return (customers.get(customer.getKey())).currentBalance(account);
+  private String showCurrentStatus(CustomerID customer, String accType) {
+		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
-	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
-		return (customers.get(customer.getKey()).Withdraw(accType, Float.valueOf(amount)));
+
+	private String withdrawTransaction(CustomerID customer, String accType, String amount){
+		return (customers.get(customer.getKey()).Withdraw(accType, Float.parseFloat(amount)));
 	}
 }
+
