@@ -99,7 +99,7 @@ public class NewBank {
 	 */
 	private String changePassword(CustomerID customer, String newPassword) {
 		try {
-			customers.get(customer.getKey()).updatePassword(newPassword);
+			customers.get(customer.getKey()).setPassword(newPassword);
 			return "Password updated";
 		} catch (Exception e) {
 			return "FAIL password not updated";
@@ -107,7 +107,7 @@ public class NewBank {
 	}
 
 	private String showMyAccounts(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
+		return (customers.get(customer.getKey())).printAccounts();
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class NewBank {
 	 * @return
 	 */
 	private String depositTransaction(CustomerID customer, String accType, String amount) {
-		return (customers.get(customer.getKey()).Deposit(accType, Float.parseFloat(amount)));
+		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "deposit"));
 	}
 
   private String showCurrentStatus(CustomerID customer, String accType) {
@@ -137,7 +137,7 @@ public class NewBank {
 	}
 
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
-		return (customers.get(customer.getKey()).Withdraw(accType, Float.parseFloat(amount)));
+		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "withdraw"));
 	}
 }
 

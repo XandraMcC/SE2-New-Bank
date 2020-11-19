@@ -11,10 +11,14 @@ public class Customer {
 	public Customer(String name, String password) {
 		this.name = name;
 		this.password = password;
-		accounts = new ArrayList<>();
+		this.accounts = new ArrayList<>();
 	}
 
-	public String accountsToString() {
+	public void addAccount(Account account) {
+		accounts.add(account);
+	}
+
+	public String printAccounts() {
 		String s = "";
 		for (Account a : accounts) {
 			s += a.toString() + "\n";
@@ -22,25 +26,12 @@ public class Customer {
 		return s;
 	}
 
-	public void addAccount(Account account) {
-		accounts.add(account);
+	public void setName(String name) {
+		this.name = password;
 	}
 
-	/**
-	 * Creates a method for a deposit which can be accessed in NewBank
-	 * @param accType
-	 * @param amount
-	 * @return
-	 */
-	public String Deposit(String accType, float amount) {
-		String s = null;
-		for (Account a : accounts) {
-			if (a.getAccountName().equals(accType)) {
-				a.setCurrentBalance(a.getCurrentBalance() + amount);
-				return "Deposited £" + amount + " to account " + a.getAccountName();
-			}
-		}
-		return "Account not found: " + accType;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -48,30 +39,16 @@ public class Customer {
 	 * @param password new value
 	 * @throws InvalidParameterException if password is 4 characters or less
 	 */
-	public void updatePassword(String password) throws InvalidParameterException {
+	public void setPassword(String password) throws InvalidParameterException {
 		if (password.length() > 4) {
 			this.password = password;
 		} else {
 			throw new InvalidParameterException();
 		}
 	}
-	public String getName() {
-		return name;
-	}
+
 	public String getPassword() {
 		return password;
-	}
-
-	/**
-	 * Method to allow access to update account balances
-	 * @param account
-	 */
-	public void updateAccount(Account account){
-		for(int i =0; i <accounts.size(); i ++) {
-			if (account.getAccountName().equals(accounts.get(i).getAccountName())){
-				accounts.set(i,account);
-			}
-		}
 	}
 
 	/**
@@ -113,17 +90,28 @@ public class Customer {
 		return NoACC; //If no account is found with that name return error.
 	}
 
-
-	public String Withdraw(String accType, float amount) {
+	/**
+	 * Withdraw or deposit money
+	 * @param accName
+	 * @param amount
+	 * @param action
+	 * @return
+	 */
+	public String transaction(String accName, float amount, String action) {
 		for (Account a : accounts) {
-			if (a.getAccountName().equals(accType)) {
-				if (a.getCurrentBalance() < amount) {
-					return "Cannot withdraw £" + amount + " from " + a.getAccountName() + " not enough funds";
+			if (a.getAccountName().equals(accName)) {
+				if (action.equals("deposit")) {
+					a.deposit(amount);
 				}
-				a.setCurrentBalance(a.getCurrentBalance() - amount);
-				return "Withdrew £" + amount + " from " + a.getAccountName();
+				else if (action.equals("withdraw")) {
+					a.withdraw(amount);
+				}
+				else {
+					return "Action not valid";
+				}
 			}
 		}
-		return "Account not found: " + accType;
+		return "Account not found: " + accName;
 	}
+
 }
