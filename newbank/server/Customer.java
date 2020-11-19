@@ -49,6 +49,7 @@ public class Customer {
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
 				s = a.getAccountName() + ": " + (a.getCurrentBalance() + Double.parseDouble(amount));
+				a.setCurrentBalance(a.getCurrentBalance()+Double.parseDouble(amount));
 				return s;
 			}
 		}
@@ -123,9 +124,24 @@ public class Customer {
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
 				String s = a.getAccountName() + ": " + (a.getCurrentBalance() - Double.parseDouble(amount));
+				a.setCurrentBalance(a.getCurrentBalance()-Double.parseDouble(amount));
 				return s;
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method to return true or false if customer has acc type.
+	 * @param accType
+	 * @return
+	 */
+	public boolean hasACC(String accType){
+		for (Account a : accounts){
+			if(a.getAccountName().equals(accType)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
