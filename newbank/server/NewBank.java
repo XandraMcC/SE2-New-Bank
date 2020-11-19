@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
-	private HashMap<String, Customer> customers;
+	private HashMap<String,Customer> customers;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -17,7 +17,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put(bhagy.getName(), bhagy);
 
-		Customer christina = new Customer("Christina", "christina");
+    	Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
 		customers.put(christina.getName(), christina);
 
@@ -47,7 +47,6 @@ public class NewBank {
 
 	/**
 	 * commands from the NewBank customer are processed in this method
-	 *
 	 * @param customer
 	 * @param request
 	 * @return
@@ -83,7 +82,7 @@ public class NewBank {
 					return "FAIL Account not specified";
 				case "ADDACCOUNT":
 					if (arguments.length == 3) {
-						return addACC(customer, arguments[1], arguments[2]);
+						return addAcc(customer, arguments[1], arguments[2]);
 					}
 					return "Incorrect Usage";
 				case "SHOWCURRENTBALANCE":
@@ -93,15 +92,13 @@ public class NewBank {
 					return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
 				case "MAKEAPAYMENT":
 					if (arguments.length == 5) {
-						return makePAY(customer, arguments[1], arguments[2], arguments[3], arguments[4]);
+						return makePay(customer, arguments[1], arguments[2], arguments[3], arguments[4]);
 					}
 					return "Incorrect Usage";
 			}
 		}
     	return "FAIL Invalid Instruction. Please try again.";
 	}
-		
-	
 
 	/**
 	 * Updates a customers password
@@ -112,7 +109,7 @@ public class NewBank {
 	 */
 	private String changePassword(CustomerID customer, String newPassword) {
 		try {
-			customers.get(customer.getKey()).updatePassword(newPassword);
+			customers.get(customer.getKey()).setPassword(newPassword);
 			return "Password updated";
 		} catch (Exception e) {
 			return "FAIL password not updated";
@@ -120,7 +117,7 @@ public class NewBank {
 	}
 
 	private String showMyAccounts(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
+		return (customers.get(customer.getKey())).printAccounts();
 	}
 
 	/**
@@ -142,23 +139,26 @@ public class NewBank {
 	 * @return
 	 */
 	private String depositTransaction(CustomerID customer, String accType, String amount) {
-		return (customers.get(customer.getKey()).Deposit(accType, amount));
+		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "deposit"));
 	}
 
   	private String showCurrentStatus(CustomerID customer, String accType) {
 		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
+
 	/* * method to withdraw money, takes account type and amount to deposit
 	accesses Withdraw function.
 	 */
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
-		return (customers.get(customer.getKey()).Withdraw(accType, amount));
+		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "withdraw"));
 	}
-	private String makePAY(CustomerID customer, String accType, String payee, String payeeACC, String Amount){
+	private String makePay(CustomerID customer, String accType, String payee, String payeeACC, String amount){
 		if(customers.get(customer.getKey()).hasACC(accType)){
 			if(customers.containsKey(payee)){
 				if(customers.get(payee).hasACC(payeeACC)){
-					return customer.getKey() + " " + customers.get(customer.getKey()).Withdraw(accType, Amount) + "\n" + customers.get(payee).Deposit(payeeACC, Amount) + " to " + payee;
+					return customer.getKey() + " " + customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount),
+							"withdraw") + "\n" + customers.get(payee).transaction(payeeACC, Float.parseFloat(amount),
+							"deposit") + " to " + payee;
 				}
 				return "Payee Account not found!";
 			}
@@ -166,7 +166,7 @@ public class NewBank {
 		}
 		return "Your Account Not found!";
 	}
-	private String addACC(CustomerID customer, String AccType, String openBAL){
+	private String addAcc(CustomerID customer, String AccType, String openBAL){
 		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
 	}
 }
