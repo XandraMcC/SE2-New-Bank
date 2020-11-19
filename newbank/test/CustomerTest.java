@@ -23,12 +23,6 @@ class CustomerTest {
   }
 
   @Test
-  void currentBalanceToString() {
-    Assertions.assertEquals("savings: 200.0", customer.CurrentBalanceToString("savings"));
-    Assertions.assertEquals("Error No Account Found", customer.CurrentBalanceToString("invalid"));
-  }
-
-  @Test
   void addAccount() {
     Account account = new Account("test", 666);
     customer.addAccount(account);
