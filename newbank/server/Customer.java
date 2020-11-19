@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class Customer {
-
 	private String name;
 	private String password;
 	private ArrayList<Account> accounts;
@@ -23,41 +22,29 @@ public class Customer {
 		return s;
 	}
 
-	//Method to get current balance of specific account type.
-	public String CurrentBalanceToString(String AccType){ //Parameter A is the chosen account type.
-		String NoACC = "Error No Account Found";
-		for(Account all : accounts) { //Cycle through each of the customers accounts.
-			if (all.getAccountName().equals(AccType)){ // If the chosen account is matched with an actual account balance is returned.
-				String currBAL = all.getAccountName() + ": " + all.getCurrentBalance() + "\n";
-				return currBAL;
-			}
-		}
-		return NoACC; //If no account is found with that name return error.
-	}
-
-
-
 	public void addAccount(Account account) {
 		accounts.add(account);
 	}
 
-
-	// Creates a method for a deposit which can be accessed in NewBank
-	public String Deposit(String accType, String amount){
-
+	/**
+	 * Creates a method for a deposit which can be accessed in NewBank
+	 * @param accType
+	 * @param amount
+	 * @return
+	 */
+	public String Deposit(String accType, float amount) {
 		String s = null;
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
-				s = a.getAccountName() + ": " + (a.getCurrentBalance() + Double.parseDouble(amount));
-				return s;
+				a.setCurrentBalance(a.getCurrentBalance() + amount);
+				return "Deposited £" + amount + " to account " + a.getAccountName();
 			}
 		}
-		return s;
+		return "Account not found: " + accType;
 	}
 
 	/**
 	 * Updates customer's password
-	 *
 	 * @param password new value
 	 * @throws InvalidParameterException if password is 4 characters or less
 	 */
@@ -68,11 +55,9 @@ public class Customer {
 			throw new InvalidParameterException();
 		}
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -105,27 +90,40 @@ public class Customer {
 	}
 
 	/**
-	 * Method to return the current balance
+	 * Method to get current balance of specific account type.
 	 * @param accountType
 	 * @return
 	 */
 	public String currentBalance(String accountType) {
-		for (Account a : accounts) {
-			if (a.getAccountName().equals(accountType)) {
-				String s = a.getAccountName() + ": " + a.getCurrentBalance();
-				return s;
+		String NoACC = "Error No Account Found";
+		if (accountType.equals("ALL")) {
+			String allBal = "";
+			for (Account allACC : accounts) {
+				allBal += allACC.getAccountName() + ": " + allACC.getCurrentBalance() + "\n";
+			}
+			return allBal;
+		} else {
+			for (Account all : accounts) { // Loop through each of the customers accounts.
+				if (all.getAccountName().equals(accountType)) { // If the chosen account is matched with an actual account balance is returned.
+					String currBal = all.getAccountName() + ": " + all.getCurrentBalance() + "\n";
+					return currBal;
+				}
 			}
 		}
-		return null;
+		return NoACC; //If no account is found with that name return error.
 	}
 
-	public String Withdraw(String accType, String amount){
+
+	public String Withdraw(String accType, float amount) {
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
-				String s = a.getAccountName() + ": " + (a.getCurrentBalance() - Double.parseDouble(amount));
-				return s;
+				if (a.getCurrentBalance() < amount) {
+					return "Cannot withdraw £" + amount + " from " + a.getAccountName() + " not enough funds";
+				}
+				a.setCurrentBalance(a.getCurrentBalance() - amount);
+				return "Withdrew £" + amount + " from " + a.getAccountName();
 			}
 		}
-		return null;
+		return "Account not found: " + accType;
 	}
 }
