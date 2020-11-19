@@ -107,7 +107,6 @@ public class Customer {
 		}
 		return null;
 	}
-
 	public String newACC(String accType, double Amount) {
 		for (Account a : accounts){
 			if (a.getAccountName().equals(accType)){

@@ -109,6 +109,5 @@ public class NewBank {
 	}
 	private String addACC(CustomerID customer, String AccType, String openBAL){
 		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
-
 	}
 }
