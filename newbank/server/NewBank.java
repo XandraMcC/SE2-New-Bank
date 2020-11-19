@@ -59,8 +59,6 @@ public class NewBank {
 			switch (arguments[0]) {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
-				case "DEPOSIT":
-					return depositTransaction(customer, arguments[1],arguments[2]);
 				case "CHANGEPASSWORD":
 					if (arguments.length >= 2) {
 						return changePassword(customer, arguments[1]);
@@ -69,6 +67,15 @@ public class NewBank {
 					}
 				case "WITHDRAW":
 					return withdrawTransaction(customer, arguments[1], arguments[2]);
+				case "DEPOSIT":
+					return depositTransaction(customer, arguments[1],arguments[2]);
+				case "INTERNALTRANSFER":
+					if (arguments.length >=4) {
+						return transferTransaction(customer, arguments[1], arguments[2], arguments[3]);
+					}
+					else {
+						return "Invalid Transaction";
+					}
 				case "SHOWSTATUS":
 					return showCurrentStatus(customer);
 				case "SHOWCURRENTBALANCE":
@@ -118,6 +125,10 @@ public class NewBank {
 
 	private String withdrawTransaction(CustomerID customer,String accType ,String amount){
 		return (customers.get(customer.getKey()).Withdraw(accType, amount));
+	}
+
+	private String transferTransaction(CustomerID customer, String accountTypeFrom, String accountTypeTo,String amount){
+		return customers.get(customer.getKey()).Transfer(accountTypeFrom, accountTypeTo,amount);
 	}
 }
 

@@ -94,6 +94,7 @@ public class Customer {
 	 * @param accountName
 	 * @return
 	 */
+
 	public Account getTransactionAccount(String accountName) {
 		Account account = null;
 		for (Account a : accounts) {
@@ -127,5 +128,24 @@ public class Customer {
 			}
 		}
 		return null;
+	}
+
+	public String Transfer(String accTypeFrom, String accTypeTo, String amount){
+		String s = "";
+		Account toAccount = null;
+		for (Account b: accounts) {
+			if(b.getAccountName().equals(accTypeTo)){
+				toAccount = b;
+			}
+		}
+		for (Account a : accounts) {
+			if (a.getAccountName().equals(accTypeFrom)) {
+				double newFromBal = ((a.getCurrentBalance() - Double.parseDouble(amount)));
+				double newToBal = (toAccount.getCurrentBalance() + Double.parseDouble((amount)));
+
+				s = a.getAccountName() + ": " + newFromBal + ": " + toAccount.getAccountName() + ": " + newToBal;
+			}
+		}
+		return s;
 	}
 }
