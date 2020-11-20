@@ -79,13 +79,17 @@ public class NewBank {
 					if (arguments.length >= 2) {
 						return showCurrentStatus(customer, arguments[1]);
 					}
-					return "FAIL Account not specified";
+          return "FAIL Account not specified";
+				case "ADDACCOUNT" :
+					if (arguments.length == 3){
+						return addACC(customer, arguments[1], arguments[2]);
+					}
+					return "Incorrect Usage";
 				case "SHOWCURRENTBALANCE":
 				  if (arguments.length >= 2){
 					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
 				  }
 				  return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
-      			}
 		}
 		return "FAIL Invalid Instruction. Please try again.";
 	}
@@ -141,5 +145,7 @@ public class NewBank {
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
 		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
+	private String addACC(CustomerID customer, String AccType, String openBAL){
+		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
+	}
 }
-
