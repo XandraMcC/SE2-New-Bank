@@ -36,14 +36,14 @@ public class Customer {
 		String s = "";
 		for (Account a : accounts) {
 			if (a.getAccountName().equals(accType)) {
-				a.setCurrentBalance(a.getCurrentBalance() - Double.parseDouble(amount));
+				a.setCurrentBalance(a.getCurrentBalance() + Double.parseDouble(amount));
         s = "Deposited: £ "  + amount + " into " + accType + " " + a.getCurrentBalance();
         return s;
 			}
 		}
 		return "Account not found: " + accType;
 	}
-
+  
 	/**
 	 * Updates customer's password
 	 * @param password new value
@@ -137,5 +137,19 @@ public class Customer {
 		}
 		addAccount(new Account(accType, Amount));
 		return "New Account Added " + currentBalance(accType);
+	}
+
+	/**
+	 * Method to return true or false if customer has acc type.
+	 * @param accType
+	 * @return
+	 */
+	public boolean hasACC(String accType){
+		for (Account a : accounts){
+			if(a.getAccountName().equals(accType)){
+				return true;
+			}
+		}
+		return false;
 	}
 }

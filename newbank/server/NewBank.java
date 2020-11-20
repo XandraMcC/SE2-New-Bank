@@ -87,14 +87,25 @@ public class NewBank {
 					}
 					return "Incorrect Usage";
 				case "SHOWCURRENTBALANCE":
+					if (arguments.length == 2){
+						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
+					}
+					return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+				case "MAKEAPAYMENT" :
+					if (arguments.length == 5){
+						return makePAY(customer, arguments[1], arguments[2], arguments[3], arguments[4]);
+					}
+					return "Incorrect Usage";
+      		}
 					if (arguments.length >= 2) {
 						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
 					}
 					return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
 			}
-		}
-		return "FAIL Invalid Instruction. Please try again.";
+    return "FAIL Invalid Instruction. Please try again.";
 	}
+		
+	
 
 	/**
 	 * Updates a customers password
@@ -147,7 +158,20 @@ public class NewBank {
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
 		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
+	private String makePAY(CustomerID customer, String accType, String payee, String payeeACC, String Amount){
+		if(customers.get(customer.getKey()).hasACC(accType)){
+			if(customers.containsKey(payee)){
+				if(customers.get(payee).hasACC(payeeACC)){
+					return customers.get(customer.getKey()).Withdraw(accType, Amount) + "\n" + customers.get(payee).Deposit(payeeACC, Amount);
+				}
+				return "Payee Account not found!";
+			}
+			return "Payee Not Found!";
+		}
+		return "Your Account Not found!";
+	}
 	private String addACC(CustomerID customer, String AccType, String openBAL){
 		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
 	}
 }
+
