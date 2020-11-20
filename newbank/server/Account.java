@@ -24,15 +24,20 @@ public class Account {
 	 * Method to retrieve the current balance of an account.
 	 * @return currentBalance
 	 */
-	public double getCurrentBalance() {
-		return currentBalance;
+	public Currency getBalance() {
+		return new Currency(currentBalance);
 	}
 
 	/**
 	 *  Method to change the current balance. - Useful for transactions etc
 	 * @param newcurrbal
 	 */
-	public void setCurrentBalance(double newcurrbal) {
+	public void setBalance(double newcurrbal) {
 		this.currentBalance = newcurrbal;
 	}
+
+	public void deposit(Currency ammount) {
+
+	}
+
 }

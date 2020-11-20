@@ -129,7 +129,7 @@ public class Customer {
 		}
 		return "Account not found: " + accType;
 	}
-	public String newACC(String accType, double Amount) {
+	public Account newACC(String accType, Currency Amount) {
 		for (Account a : accounts){
 			if (a.getAccountName().equals(accType)){
 				return "Account Type Already Exists " + currentBalance(accType);
