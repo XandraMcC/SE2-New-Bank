@@ -158,7 +158,7 @@ public class NewBank {
 		if(customers.get(customer.getKey()).hasACC(accType)){
 			if(customers.containsKey(payee)){
 				if(customers.get(payee).hasACC(payeeACC)){
-					return customers.get(customer.getKey()) + customers.get(customer.getKey()).Withdraw(accType, Amount) + "\n" + customers.get(payee).Deposit(payeeACC, Amount) + " to " + payee;
+					return customer.getKey() + " " + customers.get(customer.getKey()).Withdraw(accType, Amount) + "\n" + customers.get(payee).Deposit(payeeACC, Amount) + " to " + payee;
 				}
 				return "Payee Account not found!";
 			}
