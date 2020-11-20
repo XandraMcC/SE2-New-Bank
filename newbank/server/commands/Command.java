@@ -4,9 +4,9 @@ import newbank.server.Customer;
 
 public abstract class Command {
 
-  private String identifier;
-  private String form;
-  private String description;
+  private final String identifier;
+  private final String form;
+  private final String description;
 
   Command(String identifier, String form, String description) {
     this.identifier = identifier;
@@ -14,18 +14,21 @@ public abstract class Command {
     this.description = description;
   }
 
-  String getDescription() {
-    return description;
-  }
-
   public String getIdentifier() {
     return identifier;
   }
 
-  public String getForm() {
-    return form;
-  }
-
   public abstract String process(Customer customer, String argument);
+
+  public String toString() {
+    String response = identifier;
+    if (!description.isBlank()) {
+      response += " " + description;
+    }
+    if (!form.isBlank()) {
+      response += " , enter as \"" + identifier + " " + form + "\"";
+    }
+    return response;
+  }
 
 }

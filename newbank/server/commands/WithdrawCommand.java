@@ -1,5 +1,7 @@
 package newbank.server.commands;
 
+import newbank.server.Account;
+import newbank.server.Currency;
 import newbank.server.Customer;
 
 public class WithdrawCommand extends Command {
@@ -7,11 +9,37 @@ public class WithdrawCommand extends Command {
   public WithdrawCommand() {
     super("WITHDRAW",
             "<account_name> <amount>",
-            "");
+            "Withdraw money from an account");
   }
 
   @Override
   public String process(Customer customer, String argument) {
-    return null;
+
+    String[] arguments = argument.split(" ");
+    if (arguments.length < 2) {
+      return "FAIL";
+    }
+    Account account = customer.getAccount(arguments[0]);
+    if (account == null) {
+      return "FAIL";
+    }
+
+    Currency ammount;
+    try {
+      ammount = new Currency(arguments[1]);
+    }
+    catch (NumberFormatException e) {
+      return "FAIL";
+    }
+
+    try {
+      account.withdraw(ammount);
+    } catch (Exception e) {
+      return "FAIL";
+    }
+
+    return "Withdrew " + ammount.toString() +
+            " from " + account.getAccountName() +
+            " new balance " + account.getBalance();
   }
 }

@@ -27,5 +27,5 @@ UPDATEPASSWORD <New password>
 e.g. UPDATEPASSWORD letmein
 Sets password to 'letmein', returns FAIL if password is insufficiently complex
 
-EXIT / END / CLOSE
+END
 Logs out and closes connection to a client

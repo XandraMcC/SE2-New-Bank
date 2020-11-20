@@ -6,12 +6,32 @@ public class Currency {
   private int pence;
 
   public Currency(String input) throws NumberFormatException {
-    double asDouble = Float.valueOf(input);
+    double asDouble = Float.parseFloat(input);
     this.pence = (int)Math.floor(asDouble * 100.0);
+  }
+
+  public Currency(Currency currency) {
+    pence = currency.getValue();
+  }
+
+  public Currency(int amount) {
+    pence = amount * 100;
+  }
+
+  public Currency(float amount) {
+    pence = (int)Math.floor(amount * 100);
+  }
+
+  public Currency(double amount) {
+    pence = (int)Math.floor(amount * 100);
   }
 
   public int getValue() {
     return pence;
+  }
+
+  public void setValue(int amount) {
+    pence = amount;
   }
 
   public int getBigUnit() {
@@ -27,7 +47,7 @@ public class Currency {
   }
 
   public String toString() {
-    return String.format("%c%n%20n", symbol, getBigUnit(), getSmallUnit());
+    return String.format("%c%d.%02d", symbol, getBigUnit(), getSmallUnit());
   }
 
   public boolean isNegative() {
@@ -36,6 +56,19 @@ public class Currency {
 
   public boolean isPositive() {
     return pence > 0;
+  }
+
+  public void add(Currency amount) {
+    pence += amount.getValue();
+  }
+
+  public void subtract(Currency amount) {
+    pence -= amount.getValue();
+
+  }
+
+  public boolean greaterThanOrEqual(Currency amount) {
+    return pence > amount.getValue();
   }
 
 }

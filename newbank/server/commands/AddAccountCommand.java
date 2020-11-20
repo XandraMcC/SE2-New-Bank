@@ -13,12 +13,12 @@ public class AddAccountCommand extends Command {
   @Override
   public String process(Customer customer, String argument) {
 
-    String arguments[] = argument.split(" ");
+    String[] arguments = argument.split(" ");
     if (arguments.length < 2) {
       return "FAIL";
     }
     String accountName = arguments[0];
-    if (customer.hasACC(accountName)) {
+    if (customer.hasAccount(accountName)) {
       return "FAIL";
     }
 
@@ -29,7 +29,12 @@ public class AddAccountCommand extends Command {
       return "FAIL";
     }
 
-    Account account = customer.newACC(accountName, openingBalance);
+    Account account;
+    try {
+      account = customer.newAccount(accountName, openingBalance);
+    } catch (Exception e) {
+      return "FAIL";
+    }
 
     return "New account " + account.getAccountName() + " created" +
             " balance: " + account.getBalance();

@@ -1,47 +1,31 @@
 package newbank.server;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Customer {
-	private String name;
+	private final String name;
 	private String password;
-	private ArrayList<Account> accounts;
+	private final HashMap<String, Account> accounts;
 
 	public Customer(String name, String password) {
 		this.name = name;
 		this.password = password;
-		accounts = new ArrayList<>();
+		accounts = new HashMap<>();
 	}
 
 	public String accountsToString() {
-		String s = "";
-		for (Account a : accounts) {
-			s += a.toString() + "\n";
+		StringBuilder s = new StringBuilder("Accounts ( ");
+		for (Account a : accounts.values()) {
+			s.append(a.getAccountName());
+			s.append(" ");
 		}
-		return s;
+		s.append(")");
+		return s.toString();
 	}
 
 	public void addAccount(Account account) {
-		accounts.add(account);
-	}
-
-	/**
-	 * Creates a method for a deposit which can be accessed in NewBank
-	 * @param accType
-	 * @param amount
-	 * @return
-	 */
-	public String Deposit(String accType, String amount) {
-		String s = "";
-		for (Account a : accounts) {
-			if (a.getAccountName().equals(accType)) {
-				a.setCurrentBalance(a.getCurrentBalance() + Double.parseDouble(amount));
-        s = "Deposited: £ "  + amount + " into " + accType + " " + a.getCurrentBalance();
-        return s;
-			}
-		}
-		return "Account not found: " + accType;
+		accounts.put(account.getAccountName(), account);
 	}
   
 	/**
@@ -56,23 +40,13 @@ public class Customer {
 			throw new InvalidParameterException();
 		}
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public String getPassword() {
 		return password;
-	}
-
-	/**
-	 * Method to allow access to update account balances
-	 * @param account
-	 */
-	public void updateAccount(Account account){
-		for(int i =0; i <accounts.size(); i ++) {
-			if (account.getAccountName().equals(accounts.get(i).getAccountName())){
-				accounts.set(i,account);
-			}
-		}
 	}
 
 	/**
@@ -80,76 +54,25 @@ public class Customer {
 	 * @param accountName
 	 * @return
 	 */
-	public Account getTransactionAccount(String accountName) {
-		Account account = null;
-		for (Account a : accounts) {
-			if (accountName.equals(a.getAccountName())) {
-				account = a;
-			}
-		}
-		return account;
+	public Account getAccount(String accountName) {
+		return accounts.get(accountName);
 	}
 
-	/**
-	 * Method to get current balance of specific account type.
-	 * @param accountType
-	 * @return
-	 */
-	public String currentBalance(String accountType) {
-		String NoACC = "Error No Account Found";
-		if (accountType.equals("ALL")) {
-			String allBal = "";
-			for (Account allACC : accounts) {
-				allBal += allACC.getAccountName() + ": " + allACC.getCurrentBalance() + "\n";
-			}
-			return allBal;
-		} else {
-			for (Account all : accounts) { // Loop through each of the customers accounts.
-				if (all.getAccountName().equals(accountType)) { // If the chosen account is matched with an actual account balance is returned.
-					String currBal = all.getAccountName() + ": " + all.getCurrentBalance() + "\n";
-					return currBal;
-				}
-			}
+	public Account newAccount(String accountName, Currency amount) throws Exception {
+		if (hasAccount(accountName)) {
+			throw new Exception("Already have an account with that name");
 		}
-		return NoACC; //If no account is found with that name return error.
-	}
-
-
-	public String Withdraw(String accType, String amount) {
-		String s = "";
-		for (Account a : accounts) {
-			if (a.getAccountName().equals(accType)) {
-				if (a.getCurrentBalance() < Double.parseDouble(amount)) {
-					return "Cannot withdraw £" + amount + " from " + a.getAccountName() + " not enough funds";
-				}
-				a.setCurrentBalance(a.getCurrentBalance() - Double.parseDouble(amount));
-				s = "Withdrew: £ "  + amount + " from " + accType + " " + a.getCurrentBalance();
-				return s;
-			}
-		}
-		return "Account not found: " + accType;
-	}
-	public Account newACC(String accType, Currency Amount) {
-		for (Account a : accounts){
-			if (a.getAccountName().equals(accType)){
-				return "Account Type Already Exists " + currentBalance(accType);
-			}
-		}
-		addAccount(new Account(accType, Amount));
-		return "New Account Added " + currentBalance(accType);
+		Account newAccount = new Account(accountName, amount);
+		accounts.put(accountName, newAccount);
+		return newAccount;
 	}
 
 	/**
 	 * Method to return true or false if customer has acc type.
-	 * @param accType
+	 * @param accountName
 	 * @return
 	 */
-	public boolean hasACC(String accType){
-		for (Account a : accounts){
-			if(a.getAccountName().equals(accType)){
-				return true;
-			}
-		}
-		return false;
+	public boolean hasAccount(String accountName){
+		return accounts.containsKey(accountName);
 	}
 }

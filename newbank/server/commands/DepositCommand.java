@@ -20,7 +20,7 @@ public class DepositCommand extends Command {
 
     String accountName = arguments[0];
 
-    Account account = customer.getTransactionAccount(accountName);
+    Account account = customer.getAccount(accountName);
     if (account == null) {
       return "FAIL";
     }

@@ -14,14 +14,7 @@ public class ShowStatusCommand extends Command {
   @Override
   public String process(Customer customer, String argument) {
 
-    String[] arguments = argument.split(" ");
-    if (arguments.length < 1) {
-      return "FAIL";
-    }
-
-    String accountName = arguments[0];
-
-    Account account = customer.getTransactionAccount(accountName);
+    Account account = customer.getAccount(argument.trim());
     if (account == null) {
       return "FAIL";
     }

@@ -1,5 +1,6 @@
 package newbank.server;
 
+import newbank.server.commands.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +11,9 @@ public class NewBankClientHandler extends Thread {
 
 	static final int MAX_LOGIN_ATTEMPTS = 3;
 
-	private NewBank bank;
-	private BufferedReader in;
-	private PrintWriter out;
+	private final NewBank bank;
+	private final BufferedReader in;
+	private final PrintWriter out;
 
 	/**
 	 * Constructs a NewBankClientHandler class to handle the connection from a
@@ -44,25 +45,22 @@ public class NewBankClientHandler extends Thread {
 					}
 					customer = handleLogin();
 					loginAttempts++;
-				} else if (customer != null) {
+				} else {
 					try {
-						Thread.sleep(2 * 1000);
+						Thread.sleep(800);
 					} catch (InterruptedException ie) {
 						Thread.currentThread().interrupt();
 					}
 					// if the user is authenticated then get requests from the user and process them
 					out.println("What do you want to do?");
-					out.println("SHOWMYACCOUNTS");
-					out.println("WITHDRAW");
-					out.println("DEPOSIT");
-					out.println("INTERNALTRANSFER");
-					out.println("EXTERNALTRANSFER");
-					out.println("LOANMARKET");
+					for (Command command: bank.getCommands().values()) {
+						out.println("\t" + command.toString());
+					}
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
 					String response = bank.processRequest(customer, request);
 					out.println(response);
-					if (request.matches("EXIT|END|CLOSE")) {
+					if (request.matches("END")) {
 						customer = null;
 						running = false;
 					}
