@@ -1,23 +1,44 @@
 package newbank.server;
 
+import newbank.server.commands.*;
 import java.util.HashMap;
 
 public class NewBank {
-
 	private static final NewBank bank = new NewBank();
-	private HashMap<String,Customer> customers;
+	private HashMap<String, Customer> customers;
+	private HashMap<String, Command> commands;
 
 	private NewBank() {
-		customers = new HashMap<>();
-		addTestData();
+		customers = loadTestData();
+		commands = loadCommands();
 	}
 
-	private void addTestData() {
+	private HashMap<String, Command> loadCommands() {
+		HashMap<String, Command> commandHashMap = new HashMap<>();
+
+		addCommand(commandHashMap, new AddAccountCommand());
+		addCommand(commandHashMap, new ChangePasswordCommand());
+		addCommand(commandHashMap, new DepositCommand());
+		addCommand(commandHashMap, new MakePaymentCommand());
+		addCommand(commandHashMap, new ShowBalanceCommand());
+		addCommand(commandHashMap, new ShowStatusCommand());
+		addCommand(commandHashMap, new WithdrawCommand());
+
+		return commandHashMap;
+	}
+
+	private void addCommand(HashMap<String, Command>commandHashMap, Command command) {
+		commandHashMap.put(command.getIdentifier(), command);
+	}
+
+	private HashMap<String, Customer> loadTestData() {
+		HashMap<String, Customer> customers = new HashMap<>();
+
 		Customer bhagy = new Customer("Bhagy", "bhagy");
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put(bhagy.getName(), bhagy);
 
-    	Customer christina = new Customer("Christina", "christina");
+		Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
 		customers.put(christina.getName(), christina);
 
@@ -30,6 +51,8 @@ public class NewBank {
 		manager.addAccount(new Account("Checking", 250.0));
 		manager.addAccount(new Account("Savings", 111));
 		customers.put(manager.getName(), manager);
+
+		return customers;
 	}
 
 	public static NewBank getBank() {
@@ -47,77 +70,31 @@ public class NewBank {
 
 	/**
 	 * commands from the NewBank customer are processed in this method
-	 * @param customer
+	 *
+	 * @param customerID
 	 * @param request
 	 * @return
 	 */
-	public synchronized String processRequest(CustomerID customer, String request) {
-		if (!customers.containsKey(customer.getKey())) {
+	public synchronized String processRequest(CustomerID customerID, String request) {
+
+		Customer customer = customers.get(customerID);
+		if (customer == null) {
 			return "FAIL";
 		}
-		String[] arguments = request.split(" ");
+
+		String[] arguments = request.split(" ", 1);
+		if (arguments.length < 1) {
+			return "FAIL";
+		}
+
+		Command command = commands.get(arguments[0]);
+		if (command == null) {
+			return "FAIL";
+		}
 		if (arguments.length >= 1) {
-			switch (arguments[0]) {
-				case "SHOWMYACCOUNTS":
-					return showMyAccounts(customer);
-				case "DEPOSIT":
-					if (arguments.length >= 3) {
-						return depositTransaction(customer, arguments[1], arguments[2]);
-					}
-					return "FAIL Invalid instruction. Please try again.";
-				case "WITHDRAW":
-					if (arguments.length >= 3) {
-						return withdrawTransaction(customer, arguments[1], arguments[2]);
-					}
-					return "FAIL Invalid instruction. Please try again.";
-				case "CHANGEPASSWORD":
-					if (arguments.length >= 2) {
-						return changePassword(customer, arguments[1]);
-					}
-					return "FAIL New password not specified";
-				case "SHOWSTATUS":
-					if (arguments.length >= 2) {
-						return showCurrentStatus(customer, arguments[1]);
-					}
-					return "FAIL Account not specified";
-				case "ADDACCOUNT":
-					if (arguments.length == 3) {
-						return addAcc(customer, arguments[1], arguments[2]);
-					}
-					return "Incorrect Usage";
-				case "SHOWCURRENTBALANCE":
-					if (arguments.length == 2) {
-						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
-					}
-					return "Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
-				case "MAKEAPAYMENT":
-					if (arguments.length == 5) {
-						return makePay(customer, arguments[1], arguments[2], arguments[3], arguments[4]);
-					}
-					return "Incorrect Usage";
-			}
+			return command.process(customer, arguments[1]);
 		}
-    	return "FAIL Invalid Instruction. Please try again.";
-	}
-
-	/**
-	 * Updates a customers password
-	 *
-	 * @param customer the customerID to be updated
-	 * @param newPassword must be longer than 4 characters
-	 * @return a status message for display to the user
-	 */
-	private String changePassword(CustomerID customer, String newPassword) {
-		try {
-			customers.get(customer.getKey()).setPassword(newPassword);
-			return "Password updated";
-		} catch (Exception e) {
-			return "FAIL password not updated";
-		}
-	}
-
-	private String showMyAccounts(CustomerID customer) {
-		return (customers.get(customer.getKey())).printAccounts();
+		return command.process(customer, "");
 	}
 
 	/**
@@ -139,26 +116,23 @@ public class NewBank {
 	 * @return
 	 */
 	private String depositTransaction(CustomerID customer, String accType, String amount) {
-		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "deposit"));
+		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
   	private String showCurrentStatus(CustomerID customer, String accType) {
 		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
-
 	/* * method to withdraw money, takes account type and amount to deposit
 	accesses Withdraw function.
 	 */
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
-		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "withdraw"));
+		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
-	private String makePay(CustomerID customer, String accType, String payee, String payeeACC, String amount){
-		if(customers.get(customer.getKey()).hasAcc(accType)){
+	private String makePAY(CustomerID customer, String accType, String payee, String payeeACC, String Amount){
+		if(customers.get(customer.getKey()).hasACC(accType)){
 			if(customers.containsKey(payee)){
-				if(customers.get(payee).hasAcc(payeeACC)){
-					return customer.getKey() + " " + customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount),
-							"withdraw") + "\n" + customers.get(payee).transaction(payeeACC, Float.parseFloat(amount),
-							"deposit") + " to " + payee;
+				if(customers.get(payee).hasACC(payeeACC)){
+					return customer.getKey() + " " + customers.get(customer.getKey()).Withdraw(accType, Amount) + "\n" + customers.get(payee).Deposit(payeeACC, Amount) + " to " + payee;
 				}
 				return "Payee Account not found!";
 			}
@@ -166,8 +140,8 @@ public class NewBank {
 		}
 		return "Your Account Not found!";
 	}
-	private String addAcc(CustomerID customer, String AccType, String openBAL){
-		return customers.get(customer.getKey()).newAcc(AccType, Double.parseDouble(openBAL));
+	private String addACC(CustomerID customer, String AccType, String openBAL){
+		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
 	}
 }
 
