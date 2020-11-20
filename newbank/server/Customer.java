@@ -27,7 +27,7 @@ public class Customer {
 	}
 
 	public void setName(String name) {
-		this.name = password;
+		this.name = name;
 	}
 
 	public String getName() {
@@ -55,10 +55,10 @@ public class Customer {
 	 * Method to allow access to update account balances
 	 * @param account
 	 */
-	public void updateAccount(Account account){
-		for(int i =0; i <accounts.size(); i ++) {
+	public void updateAccount(Account account, double balance){
+		for(int i =0; i < accounts.size(); i ++) {
 			if (account.getAccountName().equals(accounts.get(i).getAccountName())){
-				accounts.set(i,account);
+				account.setCurrentBalance(balance);
 			}
 		}
 	}
@@ -68,7 +68,7 @@ public class Customer {
 	 * @param accountName
 	 * @return
 	 */
-	public Account getTransactionAccount(String accountName) {
+	public Account getAccount(String accountName) {
 		Account account = null;
 		for (Account a : accounts) {
 			if (accountName.equals(a.getAccountName())) {
@@ -84,11 +84,11 @@ public class Customer {
 	 * @return
 	 */
 	public String currentBalance(String accountType) {
-		String NoACC = "Error No Account Found";
+		String noAcc = "Error No Account Found";
 		if (accountType.equals("ALL")) {
 			String allBal = "";
-			for (Account allACC : accounts) {
-				allBal += allACC.getAccountName() + ": " + allACC.getCurrentBalance() + "\n";
+			for (Account allAcc : accounts) {
+				allBal += allAcc.getAccountName() + ": " + allAcc.getCurrentBalance() + "\n";
 			}
 			return allBal;
 		} else {
@@ -99,7 +99,7 @@ public class Customer {
 				}
 			}
 		}
-		return NoACC; //If no account is found with that name return error.
+		return noAcc; //If no account is found with that name return error.
 	}
 
 	/**
@@ -125,7 +125,8 @@ public class Customer {
 		}
 		return "Account not found: " + accName;
 	}
-	public String newACC(String accType, double Amount) {
+
+	public String newAcc(String accType, double Amount) {
 		for (Account a : accounts){
 			if (a.getAccountName().equals(accType)){
 				return "Account Type Already Exists " + currentBalance(accType);
@@ -140,7 +141,7 @@ public class Customer {
 	 * @param accType
 	 * @return
 	 */
-	public boolean hasACC(String accType){
+	public boolean hasAcc(String accType){
 		for (Account a : accounts){
 			if(a.getAccountName().equals(accType)){
 				return true;

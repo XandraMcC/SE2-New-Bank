@@ -19,6 +19,10 @@ public class Account {
 		return (accountName + ": " + openingBalance);
 	}
 
+	public void setAccountName(String name) {
+		this.accountName = name;
+	}
+
 	public String getAccountName() {
 		return accountName;
 	}

@@ -153,9 +153,9 @@ public class NewBank {
 		return (customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount), "withdraw"));
 	}
 	private String makePay(CustomerID customer, String accType, String payee, String payeeACC, String amount){
-		if(customers.get(customer.getKey()).hasACC(accType)){
+		if(customers.get(customer.getKey()).hasAcc(accType)){
 			if(customers.containsKey(payee)){
-				if(customers.get(payee).hasACC(payeeACC)){
+				if(customers.get(payee).hasAcc(payeeACC)){
 					return customer.getKey() + " " + customers.get(customer.getKey()).transaction(accType, Float.parseFloat(amount),
 							"withdraw") + "\n" + customers.get(payee).transaction(payeeACC, Float.parseFloat(amount),
 							"deposit") + " to " + payee;
@@ -167,7 +167,7 @@ public class NewBank {
 		return "Your Account Not found!";
 	}
 	private String addAcc(CustomerID customer, String AccType, String openBAL){
-		return customers.get(customer.getKey()).newACC(AccType, Double.parseDouble(openBAL));
+		return customers.get(customer.getKey()).newAcc(AccType, Double.parseDouble(openBAL));
 	}
 }
 
