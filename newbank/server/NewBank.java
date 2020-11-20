@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
-	private HashMap<String,Customer> customers;
+	private HashMap<String, Customer> customers;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -17,7 +17,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put(bhagy.getName(), bhagy);
 
-    	Customer christina = new Customer("Christina", "christina");
+		Customer christina = new Customer("Christina", "christina");
 		christina.addAccount(new Account("Savings", 1500.0));
 		customers.put(christina.getName(), christina);
 
@@ -37,7 +37,7 @@ public class NewBank {
 	}
 
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
-		if(customers.containsKey(userName)) {
+		if (customers.containsKey(userName)) {
 			if (customers.get(userName).getPassword().equals(password)) {
 				return new CustomerID(userName);
 			}
@@ -47,6 +47,7 @@ public class NewBank {
 
 	/**
 	 * commands from the NewBank customer are processed in this method
+	 *
 	 * @param customer
 	 * @param request
 	 * @return
@@ -61,12 +62,12 @@ public class NewBank {
 				case "SHOWMYACCOUNTS":
 					return showMyAccounts(customer);
 				case "DEPOSIT":
-					if (arguments.length >=3) {
+					if (arguments.length >= 3) {
 						return depositTransaction(customer, arguments[1], arguments[2]);
 					}
 					return "FAIL Invalid instruction. Please try again.";
 				case "WITHDRAW":
-					if(arguments.length >= 3) {
+					if (arguments.length >= 3) {
 						return withdrawTransaction(customer, arguments[1], arguments[2]);
 					}
 					return "FAIL Invalid instruction. Please try again.";
@@ -79,17 +80,18 @@ public class NewBank {
 					if (arguments.length >= 2) {
 						return showCurrentStatus(customer, arguments[1]);
 					}
-          return "FAIL Account not specified";
-				case "ADDACCOUNT" :
-					if (arguments.length == 3){
+					return "FAIL Account not specified";
+				case "ADDACCOUNT":
+					if (arguments.length == 3) {
 						return addACC(customer, arguments[1], arguments[2]);
 					}
 					return "Incorrect Usage";
 				case "SHOWCURRENTBALANCE":
-				  if (arguments.length >= 2){
-					return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
-				  }
-				  return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+					if (arguments.length >= 2) {
+						return ShowMyBal(customer, arguments[1]); //Passes the account type to ShowMyBal to get curr bal.
+					}
+					return "FAIL Incorrect Usage"; // Handling if SHOWCURRENTBALANCE does not have just account type after
+			}
 		}
 		return "FAIL Invalid Instruction. Please try again.";
 	}
@@ -136,7 +138,7 @@ public class NewBank {
 		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
-  private String showCurrentStatus(CustomerID customer, String accType) {
+  	private String showCurrentStatus(CustomerID customer, String accType) {
 		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
 	/* * method to withdraw money, takes account type and amount to deposit
