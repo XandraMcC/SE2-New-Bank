@@ -129,15 +129,17 @@ public class NewBank {
 	 * @return
 	 */
 	private String depositTransaction(CustomerID customer, String accType, String amount) {
-		return (customers.get(customer.getKey()).Deposit(accType, Float.parseFloat(amount)));
+		return (customers.get(customer.getKey()).Deposit(accType, amount));
 	}
 
   private String showCurrentStatus(CustomerID customer, String accType) {
 		return (customers.get(customer.getKey())).currentBalance(accType);
 	}
-
+	/* * method to withdraw money, takes account type and amount to deposit
+	accesses Withdraw function.
+	 */
 	private String withdrawTransaction(CustomerID customer, String accType, String amount){
-		return (customers.get(customer.getKey()).Withdraw(accType, Float.parseFloat(amount)));
+		return (customers.get(customer.getKey()).Withdraw(accType, amount));
 	}
 }
 
