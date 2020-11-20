@@ -30,9 +30,9 @@ public class Account {
 
 	/**
 	 *  Method to change the current balance. - Useful for transactions etc
-	 * @param currentBalance
+	 * @param newcurrbal
 	 */
-	public void setCurrentBalance(double currentBalance) {
-		this.currentBalance = currentBalance;
+	public void setCurrentBalance(double newcurrbal) {
+		this.currentBalance = newcurrbal;
 	}
 }
