@@ -1,0 +1,59 @@
+package newbank.tests;
+
+import newbank.server.Account;
+import newbank.server.Currency;
+import org.junit.jupiter.api.*;
+
+class AccountTest {
+
+  private Account account;
+  private Account account2;
+  private Currency currency;
+  private Currency currency2;
+
+  @BeforeEach
+  void init() {
+    account = new Account("Bob", new Currency(200));
+    account2 = new Account("Barry", new Currency(0));
+    currency = new Currency(10);
+    currency2 = new Currency(10);
+  }
+
+  @Test
+  void testToString() {
+    Assertions.assertTrue(account.toString().contains("Bob") && account.toString().contains("200"));
+  }
+
+  @Test
+  void testGetAccountName() {
+    Assertions.assertEquals("Bob", account.getAccountName());
+  }
+
+  @Test
+  @DisplayName("getBalance() handles negative numbers")
+  void testGetBalance1() {
+    Account account = new Account("", new Currency(-99));
+    Assertions.assertEquals(account.getBalance().toString(), "-£99.00");
+  }
+
+  @Test
+  @DisplayName("getBalance() handles pennies")
+  void testGetBalance2() {
+    Account account = new Account("", new Currency(100.01));
+    Assertions.assertEquals(account.getBalance().toString(), "£100.01");
+  }
+
+  @Test
+  @DisplayName("setBalance() handles positive numbers")
+  void testSetBalance1() {
+    account2.setBalance(currency);
+    Assertions.assertEquals(account2.getBalance(), currency);
+  }
+
+  @Test
+  @DisplayName("setBalance() handles negative numbers")
+  void testSetBalance2() {
+    account2.setBalance(currency2);
+    Assertions.assertEquals(account2.getBalance(), currency2);
+  }
+}
