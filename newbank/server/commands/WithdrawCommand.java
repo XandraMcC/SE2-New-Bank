@@ -24,21 +24,21 @@ public class WithdrawCommand extends Command {
       return "FAIL";
     }
 
-    Currency ammount;
+    Currency amount;
     try {
-      ammount = new Currency(arguments[1]);
+      amount = new Currency(arguments[1]);
     }
     catch (NumberFormatException e) {
       return "FAIL";
     }
 
     try {
-      account.withdraw(ammount);
+      account.withdraw(amount);
     } catch (Exception e) {
       return "FAIL";
     }
 
-    return "Withdrew " + ammount.toString() +
+    return "Withdrew " + amount.toString() +
             " from " + account.getAccountName() +
             " new balance " + account.getBalance();
   }

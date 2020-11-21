@@ -23,7 +23,7 @@ public class Account {
 	 * @return currentBalance
 	 */
 	public Currency getBalance() {
-		return new Currency(currentBalance);
+		return currentBalance;
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class Account {
 	 * @param amount
 	 */
 	public void setBalance(Currency amount) {
-		this.currentBalance = new Currency(amount);
+		this.currentBalance = amount;
 	}
 
 	public boolean hasFunds(Currency amount) {

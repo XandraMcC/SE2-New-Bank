@@ -18,10 +18,6 @@ public class Currency {
     pence = amount * 100;
   }
 
-  public Currency(float amount) {
-    pence = (int)Math.floor(amount * 100);
-  }
-
   public Currency(double amount) {
     pence = (int)Math.floor(amount * 100);
   }
@@ -34,11 +30,11 @@ public class Currency {
     pence = amount;
   }
 
-  public int getBigUnit() {
+  public int getPounds() {
     return pence / 100;
   }
 
-  public int getSmallUnit() {
+  public int getPence() {
     return pence % 100;
   }
 
@@ -46,8 +42,16 @@ public class Currency {
     return symbol;
   }
 
+  public int positiveInt(int negative) {
+    return negative*-1;
+  }
+
   public String toString() {
-    return String.format("%c%d.%02d", symbol, getBigUnit(), getSmallUnit());
+    if (isNegative()) {
+      return String.format("-%c%d.%02d", symbol, positiveInt(getPounds()), getPence());
+    } else {
+      return String.format("%c%d.%02d", symbol, getPounds(), getPence());
+    }
   }
 
   public boolean isNegative() {
