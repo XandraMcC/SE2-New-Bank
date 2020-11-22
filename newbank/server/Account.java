@@ -2,18 +2,16 @@ package newbank.server;
 
 public class Account {
 
-	private String accountName;
-	private double openingBalance;
-	private double currentBalance; // New Double variable to store account's current balance.
+	private final String accountName;
+	private Currency currentBalance;
   
-	public Account(String accountName, double openingBalance) {
+	public Account(String accountName, Currency openingBalance) {
 		this.accountName = accountName;
-		this.openingBalance = openingBalance;
 		this.currentBalance = openingBalance;
 	}
 
 	public String toString() {
-		return (accountName + ": " + openingBalance);
+		return (accountName + " " + currentBalance);
 	}
 
 	public String getAccountName() {
@@ -24,15 +22,27 @@ public class Account {
 	 * Method to retrieve the current balance of an account.
 	 * @return currentBalance
 	 */
-	public double getCurrentBalance() {
+	public Currency getBalance() {
 		return currentBalance;
 	}
 
 	/**
 	 *  Method to change the current balance. - Useful for transactions etc
-	 * @param newcurrbal
+	 * @param amount
 	 */
-	public void setCurrentBalance(double newcurrbal) {
-		this.currentBalance = newcurrbal;
+	public void setBalance(Currency amount) {
+		this.currentBalance = amount;
 	}
+
+	public boolean hasFunds(Currency amount) {
+		return currentBalance.greaterThanOrEqual(amount);
+	}
+
+	public void deposit(Currency amount) {
+		currentBalance.add(amount);
+	}
+
+  public void withdraw(Currency amount) {
+		currentBalance.subtract(amount);
+  }
 }
