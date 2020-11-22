@@ -2,7 +2,6 @@ import newbank.server.*;
 import org.junit.jupiter.api.*;
 import java.security.InvalidParameterException;
 
-
 class CustomerTest {
 
   final String TEST_NAME = "Bob";
@@ -30,6 +29,8 @@ class CustomerTest {
     String s = customer.accountsToString();
     Assertions.assertTrue(s.contains(TEST_ACCOUNT1_NAME) &&
             s.contains(TEST_ACCOUNT2_NAME));
+    Assertions.assertTrue(s.contains(String.valueOf(TEST_ACCOUNT1_OPENING_BALANCE)) &&
+            s.contains(String.valueOf(TEST_ACCOUNT2_OPENING_BALANCE)));
   }
 
   @Test
