@@ -1,10 +1,5 @@
-import newbank.server.Account;
-import newbank.server.Currency;
-import newbank.server.Customer;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import newbank.server.*;
+import org.junit.jupiter.api.*;
 import java.security.InvalidParameterException;
 
 class CustomerTest {
@@ -69,11 +64,6 @@ class CustomerTest {
   @Test
   void getPassword() {
     Assertions.assertEquals(TEST_PASSWORD, customer.getPassword());
-  }
-
-  @Test
-  void updateAccount() {
-    Assertions.fail("Don't think this function is needed");
   }
 
   @Test
