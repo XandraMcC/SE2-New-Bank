@@ -8,8 +8,8 @@ class MakePaymentCommandTest {
   static String PAYER_NAME = "John";
   static String PAYEE_ACCOUNT = "business";
   static String PAYER_ACCOUNT = "checking";
-  static float OPENING_BALANCE = 100;
-  static float AMOUNT = 50;
+  static int OPENING_BALANCE = 100;
+  static int AMOUNT = 50;
   static String COMMAND_PARAMETERS = PAYER_ACCOUNT + " " + AMOUNT + " " + PAYEE_NAME + " " + PAYEE_ACCOUNT;
 
   Customer payee;
@@ -24,12 +24,12 @@ class MakePaymentCommandTest {
     customerHashMap = new HashMap<>();
 
     payee = new Customer(PAYEE_NAME, PAYEE_NAME);
-    payeeAccount = new Account(PAYEE_ACCOUNT, new Currency(OPENING_BALANCE));
+    payeeAccount = new Account(PAYEE_ACCOUNT, Currency.FromInteger(OPENING_BALANCE));
     payee.addAccount(payeeAccount);
     customerHashMap.put(PAYEE_NAME, payee);
 
     payer = new Customer(PAYER_NAME, PAYER_NAME);
-    payerAccount = new Account(PAYER_ACCOUNT, new Currency(OPENING_BALANCE));
+    payerAccount = new Account(PAYER_ACCOUNT, Currency.FromInteger(OPENING_BALANCE));
     payer.addAccount(payerAccount);
     customerHashMap.put(PAYER_NAME, payer);
 
@@ -42,7 +42,7 @@ class MakePaymentCommandTest {
     Assertions.assertFalse(result.contains("FAIL"));
 
     //Check money removed from payer
-    int newBalancePennies = (int)Math.floor(OPENING_BALANCE*100) - (int)Math.floor(AMOUNT*100);
+    int newBalancePennies = (OPENING_BALANCE- AMOUNT) * 100;
     Assertions.assertEquals(newBalancePennies, payerAccount.getBalance().getValue());
 
     //Check money paid to payee

@@ -7,9 +7,9 @@ class CustomerTest {
   final String TEST_NAME = "Bob";
   final String TEST_PASSWORD = "password";
   final String TEST_ACCOUNT1_NAME = "savings";
-  final double TEST_ACCOUNT1_OPENING_BALANCE = 200;
+  final int TEST_ACCOUNT1_OPENING_BALANCE = 200;
   final String TEST_ACCOUNT2_NAME = "checking";
-  final double TEST_ACCOUNT2_OPENING_BALANCE = 200;
+  final int TEST_ACCOUNT2_OPENING_BALANCE = 200;
 
   Customer customer;
   Account account1;
@@ -18,8 +18,8 @@ class CustomerTest {
   @BeforeEach
   void setup() {
     customer = new Customer(TEST_NAME, TEST_PASSWORD);
-    account1 = new Account(TEST_ACCOUNT1_NAME, new Currency(TEST_ACCOUNT1_OPENING_BALANCE));
-    account2 = new Account(TEST_ACCOUNT2_NAME, new Currency(TEST_ACCOUNT2_OPENING_BALANCE));
+    account1 = new Account(TEST_ACCOUNT1_NAME, Currency.FromInteger(TEST_ACCOUNT1_OPENING_BALANCE));
+    account2 = new Account(TEST_ACCOUNT2_NAME, Currency.FromInteger(TEST_ACCOUNT2_OPENING_BALANCE));
     customer.addAccount(account1);
     customer.addAccount(account2);
   }
@@ -35,7 +35,7 @@ class CustomerTest {
 
   @Test
   void addAccount() {
-    Account account = new Account("test", new Currency(666));
+    Account account = new Account("test", Currency.FromInteger(666));
     customer.addAccount(account);
     Assertions.assertSame(account, customer.getAccount("test"));
 
