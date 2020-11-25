@@ -74,7 +74,7 @@ public class Account {
 	 * @return a string describing the name and state of the account
 	 */
 	public String toString() {
-		return (accountName + " " + currentBalance + "(Overdraft limit: " + overdraftLimit + ")");
+		return (accountName + " " + currentBalance + " (Overdraft limit: " + overdraftLimit + ")");
 	}
 
 	/**
@@ -129,4 +129,20 @@ public class Account {
 		}
 		currentBalance.subtract(amount);
   }
+
+	/**
+	 * Sets a new overdraft limit for the account
+	 * @param overdraftLimit e.g. £5.00
+	 */
+	void setOverdraftLimit(Currency overdraftLimit) {
+  	this.overdraftLimit = new Currency(overdraftLimit);
+	}
+
+	/**
+	 * @return the overdraft limit for the account
+	 */
+	Currency getOverdraftLimit() {
+  	return new Currency(overdraftLimit);
+	}
+
 }
