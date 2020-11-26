@@ -133,15 +133,20 @@ public class Account {
 	/**
 	 * Sets a new overdraft limit for the account
 	 * @param overdraftLimit e.g. £5.00
+	 * @throws InsufficientFundsException if the new overdraft
+	 *                                    limit would make the account over drawn
 	 */
-	void setOverdraftLimit(Currency overdraftLimit) {
+	public void setOverdraftLimit(Currency overdraftLimit) throws InsufficientFundsException {
+		if (currentBalance.getValue() < -overdraftLimit.getValue()) {
+			throw new InsufficientFundsException();
+		}
   	this.overdraftLimit = new Currency(overdraftLimit);
 	}
 
 	/**
 	 * @return the overdraft limit for the account
 	 */
-	Currency getOverdraftLimit() {
+	public Currency getOverdraftLimit() {
   	return new Currency(overdraftLimit);
 	}
 
