@@ -1,5 +1,8 @@
 package newbank.server;
 
+import org.w3c.dom.ls.LSOutput;
+
+import javax.sound.midi.Soundbank;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 
@@ -48,6 +51,7 @@ public class Customer {
 	public String getPassword() {
 		return password;
 	}
+
 
 	/**
 	 * Method to allow account to be transacted upon to be accessed
