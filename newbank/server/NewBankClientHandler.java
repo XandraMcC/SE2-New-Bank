@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.awt.Desktop;
+import java.net.URI;
 
 public class NewBankClientHandler extends Thread {
 
@@ -59,6 +61,20 @@ public class NewBankClientHandler extends Thread {
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
 					String response = bank.processRequest(customer, request);
+					//redirects user to credit rating website if 0 is entered for credit score.
+					if(response == "You do not appear to have a credit score."){
+						out.println("Redirecting you to  http://UKCreditratings.com to obtain " +
+								"your credit score");
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e){};
+
+
+						try {
+							Desktop d =Desktop.getDesktop();
+							d.browse(new URI("http://UKCreditratings.com"));
+						}catch (Exception e) {};
+					}
 					out.println(response);
 					if (request.matches("END")) {
 						customer = null;
