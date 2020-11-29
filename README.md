@@ -1,5 +1,32 @@
 # SE2-New-Bank
 
+## Architecture
+
+The server application adopts a layered architecture.  This is split into three layers:
+
+```dita
+
+  ┌───────────┐
+  │  Command  │
+  └───────────┘
+  ┌───────────┐
+  │   Logic   │
+  └───────────┘
+  ┌───────────┐
+  │    Data   │
+  └───────────┘
+
+```
+
+The **Command** layer processes input from the client application and returns 
+the result of these operations. This includes a class for each command.
+
+The **Logic** layer implements the application objects which are interacted with
+from the **Command** layer.  This includes classes such as Customer, Account, Loan etc. 
+
+The **Data** layer has not yet been implemented.  This will interface with a 
+database providing persistent storage for the application.
+
 ## Automated Tests
 Directory `./newbank/test` contains tests.  These use the JUnit framework.
 
