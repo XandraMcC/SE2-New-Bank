@@ -24,7 +24,7 @@ public class AddAccountCommand extends Command {
 
     Currency openingBalance;
     try {
-      openingBalance = new Currency(arguments[1]);
+      openingBalance = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
       return "FAIL";
     }

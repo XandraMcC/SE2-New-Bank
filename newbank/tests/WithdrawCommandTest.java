@@ -16,7 +16,7 @@ class WithdrawCommandTest{
 
   @BeforeEach
   void setUp() {
-    checking = new Account("checking", new Currency(100));
+    checking = new Account("checking", Currency.FromInteger(100));
     customer.addAccount(checking);
   }
 
@@ -24,6 +24,6 @@ class WithdrawCommandTest{
   void process() {
     String result = command.process(customer, "checking 50");
     Assertions.assertFalse(result.contains("FAIL"));
-    Assertions.assertEquals(new Currency(50.00).getValue(), checking.getBalance().getValue());
+    Assertions.assertEquals(Currency.FromDouble(50.00).getValue(), checking.getBalance().getValue());
   }
 }

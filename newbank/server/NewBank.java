@@ -42,21 +42,21 @@ public class NewBank {
 		HashMap<String, Customer> customers = new HashMap<>();
 
 		Customer bhagy = new Customer("Bhagy", "bhagy");
-		bhagy.addAccount(new Account("Main", new Currency(1000.0)));
+		bhagy.addAccount(new Account("Main", Currency.FromDouble(1000.0)));
 		customers.put(bhagy.getName(), bhagy);
 
 		Customer christina = new Customer("Christina", "christina");
-		christina.addAccount(new Account("Savings", new Currency(1500.0)));
+		christina.addAccount(new Account("Savings", Currency.FromDouble(1500.0)));
 		customers.put(christina.getName(), christina);
 
 		Customer john = new Customer("John", "john");
-		john.addAccount(new Account("Checking", new Currency(250.0)));
-		john.addAccount(new Account("Savings", new Currency(111)));
+		john.addAccount(new Account("Checking", Currency.FromDouble(250.0)));
+		john.addAccount(new Account("Savings", Currency.FromInteger(111)));
 		customers.put(john.getName(), john);
 
 		Customer manager = new Customer("MANAGER", "manager");
-		manager.addAccount(new Account("Checking", new Currency(250.0)));
-		manager.addAccount(new Account("Savings", new Currency(111)));
+		manager.addAccount(new Account("Checking", Currency.FromDouble(250.0)));
+		manager.addAccount(new Account("Savings", Currency.FromInteger(111)));
 		customers.put(manager.getName(), manager);
 
 		return customers;

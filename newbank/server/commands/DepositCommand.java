@@ -27,7 +27,7 @@ public class DepositCommand extends Command {
 
     Currency amount;
     try {
-      amount = new Currency(arguments[1]);
+      amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
       return "FAIL";
     }

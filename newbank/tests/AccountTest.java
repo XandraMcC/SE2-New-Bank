@@ -12,10 +12,10 @@ class AccountTest {
 
   @BeforeEach
   void init() {
-    account = new Account("Bob", new Currency(200));
-    account2 = new Account("Barry", new Currency(0));
-    currency = new Currency(10);
-    currency2 = new Currency(10);
+    account = new Account("Bob", Currency.FromInteger(200));
+    account2 = new Account("Barry", Currency.FromInteger(0));
+    currency = Currency.FromInteger(10);
+    currency2 = Currency.FromInteger(10);
   }
 
   @Test
@@ -31,14 +31,14 @@ class AccountTest {
   @Test
   @DisplayName("getBalance() handles negative numbers")
   void testGetBalance1() {
-    Account account = new Account("checking", new Currency(-99), new Currency(100));
+    Account account = new Account("checking", Currency.FromInteger(-99), Currency.FromInteger(100));
     Assertions.assertEquals(account.getBalance().toString(), "-£99.00");
   }
 
   @Test
   @DisplayName("getBalance() handles pennies")
   void testGetBalance2() {
-    Account account = new Account("checking", new Currency(100.01));
+    Account account = new Account("checking", Currency.FromDouble(100.01));
     Assertions.assertEquals(account.getBalance().toString(), "£100.01");
   }
 
