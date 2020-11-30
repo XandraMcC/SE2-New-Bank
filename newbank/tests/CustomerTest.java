@@ -29,8 +29,6 @@ class CustomerTest {
     String s = customer.accountsToString();
     Assertions.assertTrue(s.contains(TEST_ACCOUNT1_NAME) &&
             s.contains(TEST_ACCOUNT2_NAME));
-    Assertions.assertTrue(s.contains(String.valueOf(TEST_ACCOUNT1_OPENING_BALANCE)) &&
-            s.contains(String.valueOf(TEST_ACCOUNT2_OPENING_BALANCE)));
   }
 
   @Test
@@ -38,9 +36,6 @@ class CustomerTest {
     Account account = new Account("test", Currency.FromInteger(666));
     customer.addAccount(account);
     Assertions.assertSame(account, customer.getAccount("test"));
-
-    // Check the same account can't be added twice
-    Assertions.assertThrows(Exception.class, () -> customer.addAccount(account));
   }
 
   @Test

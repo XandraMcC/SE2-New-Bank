@@ -1,12 +1,6 @@
-import newbank.server.Account;
-import newbank.server.Currency;
-import newbank.server.Customer;
+import newbank.server.*;
 import newbank.server.commands.WithdrawCommand;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 class WithdrawCommandTest{
 

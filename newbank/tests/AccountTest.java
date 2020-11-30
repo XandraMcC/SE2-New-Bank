@@ -59,7 +59,7 @@ class AccountTest {
   @Test
   @DisplayName("setOverdraftLimit & getOverdraftLimit")
   void testSetOverdraft() {
-    Currency limitSet = new Currency(200);
+    Currency limitSet = Currency.FromInteger(200);
     try {
       account.setOverdraftLimit(limitSet);
     } catch (Exception e) {
@@ -72,14 +72,14 @@ class AccountTest {
   @Test
   @DisplayName("Cannot withdraw more than overdraft limit")
   void testOverdrawn() {
-    Currency limitSet = new Currency(200);
-    account.setBalance( new Currency(0));
+    Currency limitSet = Currency.FromInteger(200);
+    account.setBalance(Currency.FromInteger(0));
     try {
       account.setOverdraftLimit(limitSet);
     } catch (Exception e) {
       Assertions.fail(e);
     }
-    Assertions.assertThrows(InsufficientFundsException.class, () -> account.withdraw(new Currency(201)));
+    Assertions.assertThrows(InsufficientFundsException.class, () -> account.withdraw(Currency.FromInteger(201)));
     Currency limitRead = account.getOverdraftLimit();
     Assertions.assertEquals(0, account.getBalance().getValue());
   }

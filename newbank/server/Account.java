@@ -18,8 +18,8 @@ public class Account {
 			throw new InvalidParameterException("accountName is blank");
 		}
 		this.accountName = accountName;
-		this.currentBalance = new Currency(0);
-		this.overdraftLimit = new Currency(0);
+		this.currentBalance = Currency.FromInteger(0);
+		this.overdraftLimit = Currency.FromInteger(0);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Account {
 		}
 		this.accountName = accountName;
 		this.currentBalance = openingBalance;
-		this.overdraftLimit = new Currency(0);
+		this.overdraftLimit = Currency.FromInteger(0);
 	}
 
 	/**
