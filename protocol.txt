@@ -29,3 +29,7 @@ Sets password to 'letmein', returns FAIL if password is insufficiently complex
 
 END
 Logs out and closes connection to a client
+
+SETOVERDRAFT <account> <ammount>
+e.g. SETOVERDRAFT checking 200
+Sets the overdraft limit on a account
