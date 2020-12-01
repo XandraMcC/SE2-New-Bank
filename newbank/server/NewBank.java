@@ -29,8 +29,8 @@ public class NewBank {
 		addCommand(commandHashMap, new ShowMyAccountsCommand());
 		addCommand(commandHashMap, new ShowStatusCommand());
 		addCommand(commandHashMap, new WithdrawCommand());
+		addCommand((commandHashMap), new OfferLoanMarketCommand(customers));
 		addCommand(commandHashMap, new SetOverdraftCommand());
-
 		return commandHashMap;
 	}
 
