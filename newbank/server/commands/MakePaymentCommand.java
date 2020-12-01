@@ -20,7 +20,7 @@ public class MakePaymentCommand extends Command {
 
     String[] arguments = argument.split(" ");
     if (arguments.length < 4) {
-      return "FAIL";
+      return "FAIL Not enough arguments entered";
     }
 
     Account fromAccount = customer.getAccount(arguments[0]);
@@ -30,13 +30,9 @@ public class MakePaymentCommand extends Command {
 
     Currency amount;
     try {
-      amount = new Currency(arguments[1]);
+      amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL";
-    }
-
-    if (!fromAccount.hasFunds(amount)) {
-      return "FAIL";
+      return "FAIL payment amount not recognised";
     }
 
     Customer payee = customerHashMap.get(arguments[2]);
@@ -49,7 +45,11 @@ public class MakePaymentCommand extends Command {
       return "FAIL Payee Account not found!";
     }
 
-    fromAccount.withdraw(amount);
+    try {
+      fromAccount.withdraw(amount);
+    } catch (InsufficientFundsException e) {
+      return "FAIL Insufficient funds available to make payment";
+    }
     payeeAccount.deposit(amount);
 
     return "Payment " + amount + " made from " + fromAccount.getAccountName() +
