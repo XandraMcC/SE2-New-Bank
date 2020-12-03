@@ -11,7 +11,7 @@ public class MakePaymentCommand extends Command {
   public MakePaymentCommand(HashMap<String, Customer> customerHashMap) {
     super("MAKEPAYMENT",
             "<account_name> <amount> <payee_name> <payee_account>",
-            "");
+            "makes a payment from your account to another account");
     this.customerHashMap = customerHashMap;
   }
 

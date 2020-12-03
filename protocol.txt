@@ -54,8 +54,8 @@ SHOWMYACCOUNTS
 e.g. SHOWMYACCOUNTS
 Returns:
     Accounts:
-    Checking
-    Savings
+    Checking £25.00
+    Savings £0.00
 
 SHOWSTATUS <account_name>
 e.g. SHOWSTATUS Checking

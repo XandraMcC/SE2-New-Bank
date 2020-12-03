@@ -7,7 +7,7 @@ public class ChangePasswordCommand extends Command {
   public ChangePasswordCommand() {
     super("CHANGEPASSWORD",
             "<new_password>",
-            "");
+            "changes your user password");
   }
 
   @Override

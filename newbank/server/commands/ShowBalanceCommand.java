@@ -7,7 +7,7 @@ public class ShowBalanceCommand extends Command {
   public ShowBalanceCommand() {
     super("SHOWCURRENTBALANCE",
             "<account_name>",
-            "Retrieves the balance for specific account");
+            "retrieve the balance for specific account");
   }
 
   @Override

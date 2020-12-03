@@ -7,7 +7,7 @@ public class DepositCommand extends Command {
   public DepositCommand() {
     super("DEPOSIT",
             "<account_name> <amount>",
-            "Deposit into an account");
+            "deposits money into a specific account");
   }
 
   @Override

@@ -10,7 +10,7 @@ public class SetOverdraftCommand extends Command {
   public SetOverdraftCommand() {
     super("SETOVERDRAFT",
             "<account_name> <new_overdraft_limit>",
-            "sets the overdraft on an account");
+            "set a new overdraft limit on a specified account");
   }
 
   @Override

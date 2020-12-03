@@ -9,7 +9,7 @@ public class WithdrawCommand extends Command {
   public WithdrawCommand() {
     super("WITHDRAW",
             "<account_name> <amount>",
-            "Withdraw money from an account");
+            "withdraw money from an account");
   }
 
   @Override

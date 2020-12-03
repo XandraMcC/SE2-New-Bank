@@ -7,7 +7,7 @@ public class AddAccountCommand extends Command {
   public AddAccountCommand() {
     super("ADDACCOUNT",
             "<account_name> <opening_balance>",
-            "Opens a new account");
+            "opens a new account");
   }
 
   @Override
