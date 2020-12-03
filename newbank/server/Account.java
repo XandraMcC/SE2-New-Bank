@@ -1,12 +1,16 @@
 package newbank.server;
 
+import newbank.server.commands.Command;
+
 import java.security.InvalidParameterException;
+import java.util.HashMap;
 
 public class Account {
 
 	private final String accountName;
 	private Currency currentBalance;
 	private Currency overdraftLimit;
+	private HashMap<String, String> transactionHistory;
 
 	/**
 	 * Construct a new account with zero balance and no overdraft facility
@@ -147,7 +151,24 @@ public class Account {
 	 * @return the overdraft limit for the account
 	 */
 	public Currency getOverdraftLimit() {
-  	return new Currency(overdraftLimit);
+  		return overdraftLimit;
+	}
+
+	public void setTransactionHistory(String payee, Currency amount, String type) {
+		if (type.equals("withdraw")) {
+			transactionHistory.put(payee, "withdrew: " +amount.toString());
+		} else if (type.equals("deposit")) {
+			transactionHistory.put(payee, "deposited: " + amount.toString());
+		} else {
+			transactionHistory.put(payee, "unknown: " + amount.toString());
+		}
+	}
+
+	public String getTransactionHistory() {
+		for (HashMap.Entry<String, String> entry : transactionHistory.entrySet()) {
+			return entry.getKey() + " " + entry.getValue();
+		}
+		return "End";
 	}
 
 }
