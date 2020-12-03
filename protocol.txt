@@ -1,35 +1,73 @@
 This document details the protocol for interacting with the NewBank server.  
 
-A customer enters the command below and sees the messages returned 
+A customer enters the command below and sees the messages returned
+
+ADDACCOUNT <account_name> <opening_balance>
+e.g. ADDACCOUNT Checking 10
+Returns:
+    FAIL
+    New account 'Checking' created. Balance: £10.00
+
+CHANGEPASSWORD <new_password>
+e.g. CHANGEPASSWORD Bath2020
+Returns:
+    FAIL - password not updated
+    Password updated
+
+DEPOSIT <account_name> <amount>
+e.g. DEPOSIT Checking 20
+Returns:
+    FAIL
+    Deposited £20.00 into Checking. New balance: £30.00
+
+MAKEAPAYMENT <account_name> <amount> <payee_name> <payee_account>
+e.g. MAKEAPAYMENT Checking 5 Bhagy Main
+Returns:
+FAIL - Not enough arguments entered.
+FAIL - Your account is not found.
+FAIL - payment amount not recognised.
+FAIL - Payee not found.
+FAIL - Payee account not found.
+FAIL - Insufficient funds available to make payment.
+Payment £5.00 made from Checking to Bhagy account Main. Your new balance is £25.00
+
+OFFERLOANMARKET <account_name> <amount> <period> <interest_rate> <credit_score>
+e.g.
+
+SETOVERDRAFT <account_name> <new_overdraft_limit>
+e.g. SETOVERDRAFT Checking 200
+Returns:
+    FAIL - Not logged in.
+    FAIL - Not enough arguments entered.
+    FAIL - Account name not found.
+    FAIL - Amount not recognised.
+    FAIL - Not enough funds to set overdraft limit.
+    New overdraft limit set: £200.00 for Checking
+
+SHOWCURRENTBALANCE <account_name>
+e.g. SHOWCURRENTBALANCE Checking
+Returns:
+    FAIL
+    Current balance: £25.00
 
 SHOWMYACCOUNTS
-Returns a list of all the customers accounts along with their current balance 
-e.g. Main: 1000.0 
+e.g. SHOWMYACCOUNTS
+Returns:
+    Accounts:
+    Checking
+    Savings
 
-NEWACCOUNT <Name>
-e.g. NEWACCOUNT Savings
-Returns SUCCESS or FAIL
+SHOWSTATUS <account_name>
+e.g. SHOWSTATUS Checking
+Returns:
+    FAIL
+    Checking available balance: £25.00 (Overdraft limit: £200.00)
 
-MOVE <Amount> <From> <To>
-e.g. MOVE 100 Main Savings 
-Returns SUCCESS or FAIL
-
-SHOWCURRENTBALANCE <Account Type>
-e.g. SHOWCURRENTBALANCE Checking
-Can also type ALL to get current balance for all acc types
-Returns Account type + current balance
-
-MAKEAPAYMENT <Account type> <Payee> <Payee Account> <Ammount>
-e.g. MAKEAPAYMENT John Checking Bhagy Main 100
-Returns Account paid from + it's new balance + payee name + account + its new balance
-
-UPDATEPASSWORD <New password>
-e.g. UPDATEPASSWORD letmein
-Sets password to 'letmein', returns FAIL if password is insufficiently complex
+WITHDRAW <account_name> <amount>
+e.g. WITHDRAW Checking 5
+Returns:
+    FAIL
+    Withdrew £5.00 from Checking. New balance: £20.00
 
 END
 Logs out and closes connection to a client
-
-SETOVERDRAFT <account> <ammount>
-e.g. SETOVERDRAFT checking 200
-Sets the overdraft limit on a account

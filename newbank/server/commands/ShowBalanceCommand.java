@@ -18,6 +18,6 @@ public class ShowBalanceCommand extends Command {
       return "FAIL";
     }
 
-    return account.getBalance().toString();
+    return "Current balance: " + account.getBalance().toString();
   }
 }

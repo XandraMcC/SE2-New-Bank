@@ -6,7 +6,7 @@ public class DepositCommand extends Command {
 
   public DepositCommand() {
     super("DEPOSIT",
-            "<account> <amount>",
+            "<account_name> <amount>",
             "Deposit into an account");
   }
 
@@ -39,6 +39,6 @@ public class DepositCommand extends Command {
 
     return "Deposited " + amount.toString() +
             " into " + account.getAccountName() +
-            " new balance " + account.getBalance().toString();
+            ". New balance: " + account.getBalance().toString();
   }
 }

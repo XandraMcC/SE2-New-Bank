@@ -6,7 +6,7 @@ public class AddAccountCommand extends Command {
 
   public AddAccountCommand() {
     super("ADDACCOUNT",
-            "<account_name> <opening balance>",
+            "<account_name> <opening_balance>",
             "Opens a new account");
   }
 
@@ -36,7 +36,7 @@ public class AddAccountCommand extends Command {
       return "FAIL";
     }
 
-    return "New account " + account.getAccountName() + " created" +
-            " balance: " + account.getBalance();
+    return "New account '" + account.getAccountName() + "' created" +
+            ". Balance: " + account.getBalance().toString();
   }
 }

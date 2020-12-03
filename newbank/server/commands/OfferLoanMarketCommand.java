@@ -10,7 +10,8 @@ public class OfferLoanMarketCommand extends Command {
 
     public OfferLoanMarketCommand(HashMap<String, Customer> customerHashMap) {
         super("OFFERLOANMARKET",
-                "<Account> <Amount> <Period> <Interest Rate> <Credit Score>","");
+                "<account_name> <amount> <period> <interest_rate> <credit_score>",
+                "");
         this.customerHashMap = customerHashMap;
     }
 

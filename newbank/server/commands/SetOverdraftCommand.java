@@ -9,35 +9,35 @@ public class SetOverdraftCommand extends Command {
 
   public SetOverdraftCommand() {
     super("SETOVERDRAFT",
-            "<account> <new-overdraft-limit>",
+            "<account_name> <new_overdraft_limit>",
             "sets the overdraft on an account");
   }
 
   @Override
   public String process(Customer customer, String argument) {
     if (customer == null) {
-      return "FAIL not logged in";
+      return "FAIL - Not logged in.";
     }
     String[] arguments = argument.split(" ");
     if (arguments.length < 1) {
-      return "FAIL Not enough arguments entered";
+      return "FAIL - Not enough arguments entered.";
     }
     Account account = customer.getAccount(arguments[0]);
     if (account == null) {
-      return "FAIL account not found!";
+      return "FAIL - Account name not found.";
     }
     Currency amount;
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL amount not recognised";
+      return "FAIL - Amount not recognised.";
     }
     try {
       account.setOverdraftLimit(amount);
     }
     catch (InsufficientFundsException e) {
-      return "FAIL not enough funds to set overdraft limit";
+      return "FAIL - Not enough funds to set overdraft limit.";
     }
-    return "New overdraft limit set " + account.getOverdraftLimit() + " for " + account.getAccountName();
+    return "New overdraft limit set: " + account.getOverdraftLimit().toString() + " for " + account.getAccountName();
   }
 }

@@ -9,8 +9,8 @@ public class MakePaymentCommand extends Command {
   private final HashMap<String, Customer> customerHashMap;
 
   public MakePaymentCommand(HashMap<String, Customer> customerHashMap) {
-    super("MAKEAPAYMENT",
-            "<account> <amount> <payee> <payee_account>",
+    super("MAKEPAYMENT",
+            "<account_name> <amount> <payee_name> <payee_account>",
             "");
     this.customerHashMap = customerHashMap;
   }
@@ -20,40 +20,40 @@ public class MakePaymentCommand extends Command {
 
     String[] arguments = argument.split(" ");
     if (arguments.length < 4) {
-      return "FAIL Not enough arguments entered";
+      return "FAIL - Not enough arguments entered.";
     }
 
     Account fromAccount = customer.getAccount(arguments[0]);
     if (fromAccount == null) {
-      return "FAIL Your Account Not found!";
+      return "FAIL - Your account is not found.";
     }
 
     Currency amount;
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL payment amount not recognised";
+      return "FAIL - payment amount not recognised.";
     }
 
     Customer payee = customerHashMap.get(arguments[2]);
     if (payee == null) {
-      return "FAIL Payee Not Found!";
+      return "FAIL - Payee not found.";
     }
 
     Account payeeAccount = payee.getAccount(arguments[3]);
     if (payeeAccount == null) {
-      return "FAIL Payee Account not found!";
+      return "FAIL - Payee account not found.";
     }
 
     try {
       fromAccount.withdraw(amount);
     } catch (InsufficientFundsException e) {
-      return "FAIL Insufficient funds available to make payment";
+      return "FAIL - Insufficient funds available to make payment.";
     }
     payeeAccount.deposit(amount);
 
-    return "Payment " + amount + " made from " + fromAccount.getAccountName() +
-            " To " + payee.getName() + " account " + payeeAccount.getAccountName() +
-            " your balance " + fromAccount.getBalance();
+    return "Payment " + amount.toString() + " made from " + fromAccount.getAccountName() +
+            " to " + payee.getName() + " account " + payeeAccount.getAccountName() +
+            ". Your new balance is " + fromAccount.getBalance().toString();
   }
 }

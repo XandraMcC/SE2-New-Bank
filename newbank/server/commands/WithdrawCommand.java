@@ -40,6 +40,6 @@ public class WithdrawCommand extends Command {
 
     return "Withdrew " + amount.toString() +
             " from " + account.getAccountName() +
-            " new balance " + account.getBalance();
+            ". New balance: " + account.getBalance().toString();
   }
 }
