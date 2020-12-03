@@ -44,7 +44,6 @@ public class NewBank {
 		addCommand(commandHashMap, new ShowTransactionHistory());
 		addCommand(commandHashMap, new WithdrawCommand());
 		addCommand(commandHashMap, new ViewOffersCommand());
-
 		return commandHashMap;
 	}
 
