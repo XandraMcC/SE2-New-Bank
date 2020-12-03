@@ -159,12 +159,12 @@ public class Account {
 	}
 
 	public void setTransactionHistory(String payee, Currency amount, String type) {
-		if (type.equals("withdraw")) {
-			transactionHistory.put(payee, "withdrew: " +amount.toString());
-		} else if (type.equals("deposit")) {
-			transactionHistory.put(payee, "deposited: " + amount.toString());
+		if (type.equals(Constants.WITHDRAW)) {
+			transactionHistory.put(payee, "Withdrew: " +amount.toString());
+		} else if (type.equals(Constants.DEPOSIT)) {
+			transactionHistory.put(payee, "Deposited: " + amount.toString());
 		} else {
-			transactionHistory.put(payee, "unknown: " + amount.toString());
+			transactionHistory.put(payee, "Unknown: " + amount.toString());
 		}
 	}
 
