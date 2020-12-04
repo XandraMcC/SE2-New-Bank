@@ -43,4 +43,13 @@ public class LoanOffer {
     return newLoan;
   }
 
+  public Customer getOfferer() {
+    return offerer;
+  }
+  public Currency getAmount() {
+    return amount;
+  }
+  public float getInterestRate() {
+    return interestRate;
+  }
 }
