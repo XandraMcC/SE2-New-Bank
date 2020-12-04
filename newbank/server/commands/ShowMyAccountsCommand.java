@@ -7,7 +7,7 @@ public class ShowMyAccountsCommand extends Command {
   public ShowMyAccountsCommand() {
     super("SHOWMYACCOUNTS",
             "",
-            "");
+            "show all accounts and balances");
   }
 
   @Override

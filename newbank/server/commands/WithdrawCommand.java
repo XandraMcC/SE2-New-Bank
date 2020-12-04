@@ -9,7 +9,7 @@ public class WithdrawCommand extends Command {
   public WithdrawCommand() {
     super("WITHDRAW",
             "<account_name> <amount>",
-            "Withdraw money from an account");
+            "withdraw money from an account");
   }
 
   @Override
@@ -40,6 +40,6 @@ public class WithdrawCommand extends Command {
 
     return "Withdrew " + amount.toString() +
             " from " + account.getAccountName() +
-            " new balance " + account.getBalance();
+            ". New balance: " + account.getBalance().toString();
   }
 }

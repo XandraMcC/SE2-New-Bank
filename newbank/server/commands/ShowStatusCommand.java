@@ -7,7 +7,7 @@ public class ShowStatusCommand extends Command {
   public ShowStatusCommand() {
     super("SHOWSTATUS",
             "<account_name>",
-            "");
+            "show specific account balance and overdraft limit");
   }
 
 

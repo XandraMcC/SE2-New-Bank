@@ -15,12 +15,13 @@ public class Customer {
 	}
 
 	public String accountsToString() {
-		StringBuilder s = new StringBuilder("Accounts ( ");
+		StringBuilder s = new StringBuilder("Accounts: ");
 		for (Account a : accounts.values()) {
 			s.append(a.getAccountName());
 			s.append(" ");
+			s.append(a.getBalance().toString());
+			s.append("\n");
 		}
-		s.append(")");
 		return s.toString();
 	}
 

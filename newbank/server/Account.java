@@ -74,7 +74,8 @@ public class Account {
 	 * @return a string describing the name and state of the account
 	 */
 	public String toString() {
-		return (accountName + " " + currentBalance + " (Overdraft limit: " + overdraftLimit + ")");
+		return (accountName + " available balance: " + currentBalance.toString()  +
+				" (Overdraft limit: " + overdraftLimit.toString() + ")");
 	}
 
 	/**
