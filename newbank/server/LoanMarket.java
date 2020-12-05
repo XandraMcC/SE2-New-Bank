@@ -1,10 +1,11 @@
 package newbank.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoanMarket {
 
-  private ArrayList<LoanOffer> loanOffers;
+  public ArrayList<LoanOffer> loanOffers;
 
   /**
    * Constructor
@@ -36,7 +37,7 @@ public class LoanMarket {
   /**
    * @return a list of all the loan offers on the market
    */
-  ArrayList<LoanOffer> getLoanOffers() {
+  public ArrayList<LoanOffer> getLoanOffers() {
     return loanOffers;
   }
 
