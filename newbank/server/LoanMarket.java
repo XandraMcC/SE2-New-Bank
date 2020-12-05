@@ -21,6 +21,7 @@ public class LoanMarket {
     loanOffers.add(loanOffer);
   }
 
+
   /**
    * Removes a loan offer from the market
    * @param loanOffer to remove
@@ -39,5 +40,7 @@ public class LoanMarket {
   ArrayList<LoanOffer> getLoanOffers() {
     return loanOffers;
   }
+
+
 
 }

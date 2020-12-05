@@ -1,5 +1,7 @@
 package newbank.server;
 
+import newbank.server.commands.OfferLoanMarketCommand;
+
 public class LoanOffer {
 
   private Currency amount; // The amount of money being offered
@@ -20,6 +22,9 @@ public class LoanOffer {
     this.amount = new Currency(amount);
     this.interestRate = interestRate;
   }
+
+
+
 
   /**
    * Takes out a new loan from the offer
