@@ -6,8 +6,8 @@ public class AddAccountCommand extends Command {
 
   public AddAccountCommand() {
     super("ADDACCOUNT",
-            "<account_name> <opening balance>",
-            "Opens a new account");
+            "<account_name> <opening_balance>",
+            "opens a new account");
   }
 
   @Override
@@ -36,7 +36,7 @@ public class AddAccountCommand extends Command {
       return "FAIL";
     }
 
-    return "New account " + account.getAccountName() + " created" +
-            " balance: " + account.getBalance();
+    return "New account '" + account.getAccountName() + "' created" +
+            ". Balance: " + account.getBalance().toString();
   }
 }

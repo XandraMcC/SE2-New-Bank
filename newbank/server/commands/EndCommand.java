@@ -7,7 +7,7 @@ public class EndCommand extends Command {
   public EndCommand() {
     super("END",
             "",
-            "Exits from a login session and close network connection");
+            "exits from a login session and closes the network connection");
   }
 
   @Override

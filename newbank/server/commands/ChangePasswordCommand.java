@@ -7,7 +7,7 @@ public class ChangePasswordCommand extends Command {
   public ChangePasswordCommand() {
     super("CHANGEPASSWORD",
             "<new_password>",
-            "");
+            "changes your user password");
   }
 
   @Override
@@ -15,7 +15,7 @@ public class ChangePasswordCommand extends Command {
     try {
       customer.updatePassword(argument);
     } catch (Exception e) {
-      return "FAIL password not updated";
+      return "FAIL - password not updated";
     }
     return "Password updated";
   }
