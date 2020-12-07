@@ -4,9 +4,12 @@ import newbank.server.*;
 
 import java.util.HashMap;
 
+
+
+
 public class OfferLoanMarketCommand extends Command {
 
-    private final HashMap<String, Customer> customerHashMap;
+    public final HashMap<String, Customer> customerHashMap;
 
     public OfferLoanMarketCommand(HashMap<String, Customer> customerHashMap) {
         super("OFFERLOANMARKET",
@@ -15,13 +18,17 @@ public class OfferLoanMarketCommand extends Command {
         this.customerHashMap = customerHashMap;
     }
 
-    @Override
-    public String process(Customer customer, String argument) {
+    LoanMarket market = new LoanMarket();
 
-        String[] arguments = argument.split(" ");
+    @Override
+    public String process(Customer customer,  String argument) {
+
+         String[] arguments = argument.split(" ");
         if (arguments.length < 4) {
             return "FAIL";
         }
+
+
 
         // Account from which the loan will be made
 
@@ -62,10 +69,17 @@ public class OfferLoanMarketCommand extends Command {
             return "Credit score should be between 1 and 2000.";
         }
 
+        LoanOffer loan = new LoanOffer(customer, fromLoanAccount.getAccountName(), amount, interestRate );
+        market.addLoanOffer(loan);
+
         // Prints out summary of loan offer
         return "Loan offered for  " + amount + " has been  made from  " + fromLoanAccount.getAccountName() +
                 " account For a period of " + period +  " months at a  rate of "
                 + interestRate +
                 " percent. You are prepared to lend at or above a credit score of "
-                + creditScore;}
+                + creditScore;
+    }
+
+
+
 }
