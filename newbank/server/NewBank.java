@@ -7,6 +7,7 @@ public class NewBank {
 	private static final NewBank bank = new NewBank();
 	private final HashMap<String, Customer> customers;
 	private final HashMap<String, Command> commands;
+	public LoanMarket market = new LoanMarket();
 
 	private NewBank() {
 		customers = loadTestData();
