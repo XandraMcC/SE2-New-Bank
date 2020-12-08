@@ -53,13 +53,17 @@ public class NewBank {
 
 		Customer john = new Customer("John", "john");
 		john.addAccount(new Account("Checking", Currency.FromDouble(250.0)));
-		john.addAccount(new Account("Savings", Currency.FromInteger(111)));
 		customers.put(john.getName(), john);
 
 		Customer manager = new Customer("MANAGER", "manager");
-		manager.addAccount(new Account("Checking", Currency.FromDouble(250.0)));
-		manager.addAccount(new Account("Savings", Currency.FromInteger(111)));
+		manager.addAccount(new Account("Checking", Currency.FromDouble(2000250.0)));
 		customers.put(manager.getName(), manager);
+
+		Customer test = new Customer("Test", "test");
+		test.addAccount(new Account("Checking", Currency.FromDouble(20250.0)));
+		test.addAccount(new Account("Savings", Currency.FromInteger(10000)));
+		test.addAccount(new Account("Main", Currency.FromInteger(60000)));
+		customers.put(test.getName(), test);
 
 		return customers;
 	}
