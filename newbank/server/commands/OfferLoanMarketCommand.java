@@ -18,7 +18,6 @@ public class OfferLoanMarketCommand extends Command {
         this.customerHashMap = customerHashMap;
     }
 
-    LoanMarket market = new LoanMarket();
 
     @Override
     public String process(Customer customer,  String argument) {
@@ -70,7 +69,7 @@ public class OfferLoanMarketCommand extends Command {
         }
 
         LoanOffer loan = new LoanOffer(customer, fromLoanAccount.getAccountName(), amount, interestRate );
-        market.addLoanOffer(loan);
+        LoanMarket.addLoanOffer(loan);
 
         // Prints out summary of loan offer
         return "Loan offered for  " + amount + " has been  made from  " + fromLoanAccount.getAccountName() +
