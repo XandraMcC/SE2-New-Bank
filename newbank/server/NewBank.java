@@ -4,19 +4,29 @@ import newbank.server.commands.*;
 import java.util.HashMap;
 
 public class NewBank {
+
 	private static final NewBank bank = new NewBank();
 	private final HashMap<String, Customer> customers;
 	private final HashMap<String, Command> commands;
 
+	/**
+	 * Constructs NewBank loading initial data
+	 */
 	private NewBank() {
 		customers = loadTestData();
 		commands = loadCommands();
 	}
 
+	/**
+	 * @return the commands implemented by NewBank
+	 */
 	public HashMap<String, Command> getCommands() {
 		return commands;
 	}
 
+	/**
+	 * @return loads all of the commands which can be called
+	 */
 	private HashMap<String, Command> loadCommands() {
 		HashMap<String, Command> commandHashMap = new HashMap<>();
 
@@ -32,13 +42,22 @@ public class NewBank {
 		addCommand((commandHashMap), new OfferLoanMarketCommand(customers));
 		addCommand(commandHashMap, new SetOverdraftCommand());
 		addCommand(commandHashMap, new ViewOffersCommand());
+
 		return commandHashMap;
 	}
 
+	/**
+	 * Adds a command to the hash map of commands
+	 * @param commandHashMap the hashmap to which the command is added
+	 * @param command the command to add
+	 */
 	private void addCommand(HashMap<String, Command>commandHashMap, Command command) {
 		commandHashMap.put(command.getIdentifier(), command);
 	}
 
+	/**
+	 * @return the test data which has been loaded
+	 */
 	private HashMap<String, Customer> loadTestData() {
 		HashMap<String, Customer> customers = new HashMap<>();
 
@@ -63,10 +82,18 @@ public class NewBank {
 		return customers;
 	}
 
+	/**
+	 * @return the singleton instance of this NewBank class
+	 */
 	public static NewBank getBank() {
 		return bank;
 	}
 
+	/**
+	 * @param userName the login name (case sensitive)
+	 * @param password the login password (case sensitive)
+	 * @return the CustomerID associated with username and password, or null
+	 */
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if (customers.containsKey(userName)) {
 			if (customers.get(userName).getPassword().equals(password)) {
@@ -79,8 +106,8 @@ public class NewBank {
 	/**
 	 * commands from the user are processed in this method
 	 *
-	 * @param customerID
-	 * @param request
+	 * @param customerID the logged in customer
+	 * @param request the text to be processed
 	 * @return result presented to user
 	 */
 	public synchronized String processRequest(CustomerID customerID, String request) {
