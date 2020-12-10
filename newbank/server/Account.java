@@ -3,6 +3,7 @@ package newbank.server;
 import newbank.server.commands.Command;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Account {
@@ -10,7 +11,7 @@ public class Account {
 	private final String accountName;
 	private Currency currentBalance;
 	private Currency overdraftLimit;
-	private HashMap<String, String> transactionHistory;
+	private ArrayList<String> transactionHistory;
 
 	/**
 	 * Construct a new account with zero balance and no overdraft facility
@@ -24,7 +25,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = Currency.FromInteger(0);
 		this.overdraftLimit = Currency.FromInteger(0);
-		this.transactionHistory = new HashMap<>();
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -160,17 +161,16 @@ public class Account {
 
 	public void setTransactionHistory(String payee, Currency amount, String type) {
 		if (type.equals(Constants.WITHDRAW)) {
-			transactionHistory.put(payee, "Withdrew: " +amount.toString());
-		} else if (type.equals(Constants.DEPOSIT)) {
-			transactionHistory.put(payee, "Deposited: " + amount.toString());
+			transactionHistory.add(payee + " withdrew: " +amount.toString());
 		} else {
-			transactionHistory.put(payee, "Unknown: " + amount.toString());
+			transactionHistory.add(payee + " deposited: " + amount.toString());
 		}
 	}
 
 	public String getTransactionHistory() {
-		for (HashMap.Entry<String, String> entry : transactionHistory.entrySet()) {
-			return entry.getKey() + " " + entry.getValue();
+		for (int i = 0; i < transactionHistory.size(); i++)
+		{
+			return transactionHistory.get(i);
 		}
 		return Constants.END;
 	}
