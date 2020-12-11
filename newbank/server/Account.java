@@ -48,6 +48,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = openingBalance;
 		this.overdraftLimit = Currency.FromInteger(0);
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -74,6 +75,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = openingBalance;
 		this.overdraftLimit = overdraftLimit;
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -122,8 +124,8 @@ public class Account {
 	 * @param amount e.g. £5.00
 	 */
 	public void deposit(Currency amount) {
+		setTransactionHistory(Constants.CASH, amount.toString(), Constants.DEPOSIT);
 		currentBalance.add(amount);
-		setTransactionHistory(Constants.CASH, amount, Constants.DEPOSIT);
 	}
 
 	/**
@@ -136,7 +138,7 @@ public class Account {
   		throw new InsufficientFundsException();
 		}
 		currentBalance.subtract(amount);
-	  	setTransactionHistory(Constants.CASH, amount, Constants.WITHDRAW);
+	  	setTransactionHistory(Constants.CASH, amount.toString(), Constants.WITHDRAW);
   }
 
 	/**
@@ -159,11 +161,13 @@ public class Account {
   		return overdraftLimit;
 	}
 
-	public void setTransactionHistory(String payee, Currency amount, String type) {
+	public void setTransactionHistory(String payee, String amount, String type) {
 		if (type.equals(Constants.WITHDRAW)) {
-			transactionHistory.add(payee + " withdrew: " +amount.toString());
+			transactionHistory.add(payee + " withdrew: " + amount);
+		} else if (type.equals(Constants.DEPOSIT)) {
+			transactionHistory.add(payee + " deposited: " + amount);
 		} else {
-			transactionHistory.add(payee + " deposited: " + amount.toString());
+			transactionHistory.add(payee + " unknown: " + amount);
 		}
 	}
 

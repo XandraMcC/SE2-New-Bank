@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.Customer;
 import newbank.server.commands.ChangePasswordCommand;
 import org.junit.jupiter.api.Assertions;
