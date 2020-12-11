@@ -20,6 +20,6 @@ public class ShowTransactionHistory extends Command {
       return Constants.FAIL;
     }
 
-    return account.getTransactionHistory();
+    return account.getTransactionHistory().toString();
   }
 }
