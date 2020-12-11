@@ -24,6 +24,7 @@ public class OfferLoanMarketCommand extends Command {
         }
 
         // Account from which the loan will be made
+
         Account fromLoanAccount = customer.getAccount(arguments[0]);
         if (fromLoanAccount == null) {
             return Constants.FAILACCOUNTNOTFOUND;

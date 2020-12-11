@@ -18,8 +18,8 @@ class LoanMarketTest {
   @Test
   void addLoanOffer() {
     int initialLength = loanMarket.getLoanOffers().size();
-    Customer offerer = new Customer("bob", "bob");
-    LoanOffer loanOffer = new LoanOffer(offerer, "Test", Currency.FromInteger(100), 0.05f);
+    Customer lender = new Customer("bob", "bob");
+    LoanOffer loanOffer = new LoanOffer(lender, "Test", Currency.FromInteger(100), 0.05f);
     loanMarket.addLoanOffer(loanOffer);
     Assertions.assertEquals(initialLength + 1, loanMarket.getLoanOffers().size());
   }
@@ -27,8 +27,8 @@ class LoanMarketTest {
   @Test
   void removeLoanOffer() {
     int initialLength = loanMarket.getLoanOffers().size();
-    Customer offerer = new Customer("bob", "bob");
-    LoanOffer loanOffer = new LoanOffer(offerer, "Test", Currency.FromInteger(100), 0.05f);
+    Customer lender = new Customer("bob", "bob");
+    LoanOffer loanOffer = new LoanOffer(lender, "Test", Currency.FromInteger(100), 0.05f);
     loanMarket.addLoanOffer(loanOffer);
     Assertions.assertEquals(initialLength + 1, loanMarket.getLoanOffers().size());
     //Had to comment out since its throwing error.
@@ -38,9 +38,9 @@ class LoanMarketTest {
 
   @Test
   void getLoanOffers() {
-    Customer offerer = new Customer("bob", "bob");
+    Customer lender = new Customer("bob", "bob");
     Assertions.assertTrue(loanMarket.getLoanOffers().isEmpty());
-    LoanOffer loanOffer = new LoanOffer(offerer, "Test", Currency.FromInteger(100), 0.05f);
+    LoanOffer loanOffer = new LoanOffer(lender, "Test", Currency.FromInteger(100), 0.05f);
     loanMarket.addLoanOffer(loanOffer);
     Assertions.assertEquals(loanOffer, loanMarket.getLoanOffers().get(0));
   }
