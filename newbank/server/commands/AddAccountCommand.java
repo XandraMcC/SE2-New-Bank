@@ -12,28 +12,30 @@ public class AddAccountCommand extends Command {
 
   @Override
   public String process(Customer customer, String argument) {
-
-    String[] arguments = argument.split(" ");
-    if (arguments.length < 2) {
-      return "FAIL";
-    }
-    String accountName = arguments[0];
-    if (customer.hasAccount(accountName)) {
-      return "FAIL";
-    }
-
+    Account account;
+    String accountName;
     Currency openingBalance;
+    String[] arguments = argument.split(" ");
+
+    if (arguments.length < 2) {
+      return Constants.FAIL;
+    }
+
+    accountName = arguments[0];
+    if (customer.hasAccount(accountName)) {
+      return Constants.FAILACCOUNTEXISTS;
+    }
+
     try {
       openingBalance = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
-    Account account;
     try {
       account = customer.newAccount(accountName, openingBalance);
     } catch (Exception e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     return "New account '" + account.getAccountName() + "' created" +

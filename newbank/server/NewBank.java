@@ -36,14 +36,14 @@ public class NewBank {
 		addCommand(commandHashMap, new DepositCommand());
 		addCommand(commandHashMap, new EndCommand());
 		addCommand(commandHashMap, new MakePaymentCommand(customers));
+		addCommand(commandHashMap, new OfferLoanMarketCommand(customers));
+		addCommand(commandHashMap, new SetOverdraftCommand());
 		addCommand(commandHashMap, new ShowBalanceCommand());
 		addCommand(commandHashMap, new ShowMyAccountsCommand());
 		addCommand(commandHashMap, new ShowStatusCommand());
+		addCommand(commandHashMap, new ShowTransactionHistory());
 		addCommand(commandHashMap, new WithdrawCommand());
-		addCommand((commandHashMap), new OfferLoanMarketCommand(customers));
-		addCommand(commandHashMap, new SetOverdraftCommand());
 		addCommand(commandHashMap, new ViewOffersCommand());
-
 		return commandHashMap;
 	}
 

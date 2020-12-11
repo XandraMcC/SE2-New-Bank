@@ -16,7 +16,7 @@ public class ShowStatusCommand extends Command {
 
     Account account = customer.getAccount(argument.trim());
     if (account == null) {
-      return "FAIL";
+      return Constants.FAIL;
     }
     return account.toString();
   }

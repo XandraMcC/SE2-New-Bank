@@ -15,24 +15,24 @@ public class DepositCommand extends Command {
 
     String[] arguments = argument.split(" ");
     if (arguments.length < 2) {
-      return "FAIL";
+      return Constants.FAILNOTENOUGHARGS;
     }
 
     String accountName = arguments[0];
-
     Account account = customer.getAccount(accountName);
     if (account == null) {
-      return "FAIL";
+      return Constants.FAILACCOUNTNOTFOUND;
     }
 
     Currency amount;
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
+
     if (amount.isNegative()) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     account.deposit(amount);

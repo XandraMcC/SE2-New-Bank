@@ -1,6 +1,7 @@
 package newbank.server.commands;
 
 import newbank.server.Account;
+import newbank.server.Constants;
 import newbank.server.Currency;
 import newbank.server.Customer;
 
@@ -17,11 +18,11 @@ public class WithdrawCommand extends Command {
 
     String[] arguments = argument.split(" ");
     if (arguments.length < 2) {
-      return "FAIL";
+      return Constants.FAIL;
     }
     Account account = customer.getAccount(arguments[0]);
     if (account == null) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     Currency amount;
@@ -29,13 +30,13 @@ public class WithdrawCommand extends Command {
       amount = Currency.FromString(arguments[1]);
     }
     catch (NumberFormatException e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     try {
       account.withdraw(amount);
     } catch (Exception e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     return "Withdrew " + amount.toString() +

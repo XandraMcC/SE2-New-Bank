@@ -4,9 +4,6 @@ import newbank.server.*;
 
 import java.util.HashMap;
 
-
-
-
 public class OfferLoanMarketCommand extends Command {
 
     public final HashMap<String, Customer> customerHashMap;
@@ -21,41 +18,38 @@ public class OfferLoanMarketCommand extends Command {
 
     @Override
     public String process(Customer customer,  String argument) {
-
-         String[] arguments = argument.split(" ");
+        String[] arguments = argument.split(" ");
         if (arguments.length < 4) {
-            return "FAIL";
+            return Constants.FAIL;
         }
-
-
 
         // Account from which the loan will be made
 
         Account fromLoanAccount = customer.getAccount(arguments[0]);
         if (fromLoanAccount == null) {
-            return "FAIL Your Account Not found!";
+            return Constants.FAILACCOUNTNOTFOUND;
         }
 
         Currency amount;
         try {
             amount = Currency.FromString(arguments[1]);
         } catch (NumberFormatException e) {
-            return "FAIL";
+            return Constants.FAIL;
         }
 
         //Loan Period should be greater than 0 and not more than 120 months
         int period = Integer.parseInt(arguments[2]);
         if (period <= 0) {
-            return "FAIL Loan needs a positive tenor";
+            return Constants.FAILPOSTEN;
         }
         else if(period > 120){
-            return "Loan tenor may not exceed 120 months";
+            return Constants.FAILTOOLONG;
         }
 
         // Interest rate entered as an integer between 0 and 20
         int interestRate = Integer.parseInt(arguments[3]);
         if(interestRate <= 0 || interestRate > 20){
-            return "FAIL Interest Rate needs to be greater than 0 and less than 20";
+            return Constants.FAILIRWRONG;
         }
 
         /*Credit score should be between 1 and 2000
@@ -65,7 +59,7 @@ public class OfferLoanMarketCommand extends Command {
         int  creditScore =  Integer.parseInt(arguments[4]);
 
         if(creditScore < 0 || creditScore > 2000) {
-            return "Credit score should be between 1 and 2000.";
+            return Constants.FAILCREDITSCORE;
         }
 
         LoanOffer loan = new LoanOffer(customer, fromLoanAccount.getAccountName(), amount, interestRate );
@@ -78,7 +72,5 @@ public class OfferLoanMarketCommand extends Command {
                 " percent. You are prepared to lend at or above a credit score of "
                 + creditScore;
     }
-
-
 
 }

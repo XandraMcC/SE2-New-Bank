@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.*;
 import newbank.server.commands.MakePaymentCommand;
 import org.junit.jupiter.api.*;

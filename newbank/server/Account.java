@@ -1,12 +1,14 @@
 package newbank.server;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 
 public class Account {
 
 	private final String accountName;
 	private Currency currentBalance;
 	private Currency overdraftLimit;
+	private ArrayList<String> transactionHistory;
 
 	/**
 	 * Construct a new account with zero balance and no overdraft facility
@@ -20,6 +22,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = Currency.FromInteger(0);
 		this.overdraftLimit = Currency.FromInteger(0);
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -42,6 +45,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = openingBalance;
 		this.overdraftLimit = Currency.FromInteger(0);
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -68,6 +72,7 @@ public class Account {
 		this.accountName = accountName;
 		this.currentBalance = openingBalance;
 		this.overdraftLimit = overdraftLimit;
+		this.transactionHistory = new ArrayList<>();
 	}
 
 	/**
@@ -116,6 +121,7 @@ public class Account {
 	 * @param amount e.g. £5.00
 	 */
 	public void deposit(Currency amount) {
+		setTransactionHistory(amount.toString(), Constants.DEPOSIT);
 		currentBalance.add(amount);
 	}
 
@@ -127,8 +133,9 @@ public class Account {
   public void withdraw(Currency amount) throws InsufficientFundsException {
   	if (!hasFunds(amount)) {
   		throw new InsufficientFundsException();
-		}
-		currentBalance.subtract(amount);
+  	}
+  	setTransactionHistory(amount.toString(), Constants.WITHDRAW);
+  	currentBalance.subtract(amount);
   }
 
 	/**
@@ -148,7 +155,21 @@ public class Account {
 	 * @return the overdraft limit for the account
 	 */
 	public Currency getOverdraftLimit() {
-  	return new Currency(overdraftLimit);
+  		return overdraftLimit;
+	}
+
+	public void setTransactionHistory(String amount, String type) {
+		if (type.equals(Constants.WITHDRAW)) {
+			transactionHistory.add("Withdrew: " + amount);
+		} else if (type.equals(Constants.DEPOSIT)) {
+			transactionHistory.add("Deposited: " + amount);
+		} else {
+			transactionHistory.add("Unknown: " + amount);
+		}
+	}
+
+	public ArrayList<String> getTransactionHistory() {
+		return transactionHistory;
 	}
 
 }

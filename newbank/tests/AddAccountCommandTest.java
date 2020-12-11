@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.Customer;
 import newbank.server.commands.AddAccountCommand;
 import org.junit.jupiter.api.*;

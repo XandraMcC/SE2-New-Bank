@@ -17,39 +17,40 @@ public class MakePaymentCommand extends Command {
 
   @Override
   public String process(Customer customer, String argument) {
-
     String[] arguments = argument.split(" ");
-    if (arguments.length < 4) {
-      return "FAIL - Not enough arguments entered.";
-    }
-
-    Account fromAccount = customer.getAccount(arguments[0]);
-    if (fromAccount == null) {
-      return "FAIL - Your account is not found.";
-    }
-
     Currency amount;
+    Account fromAccount = customer.getAccount(arguments[0]);
+    Customer payee = customerHashMap.get(arguments[2]);
+    Account payeeAccount = payee.getAccount(arguments[3]);
+
+    if (arguments.length < 4) {
+      return Constants.FAILNOTENOUGHARGS;
+    }
+
+    if (fromAccount == null) {
+      return Constants.FAILACCOUNTNOTFOUND;
+    }
+
+    if (payee == null) {
+      return Constants.FAILPAYEENOTFOUND;
+    }
+
+    if (payeeAccount == null) {
+      return Constants.FAILPAYEEACCOUNTNOTFOUND;
+    }
+
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL - payment amount not recognised.";
-    }
-
-    Customer payee = customerHashMap.get(arguments[2]);
-    if (payee == null) {
-      return "FAIL - Payee not found.";
-    }
-
-    Account payeeAccount = payee.getAccount(arguments[3]);
-    if (payeeAccount == null) {
-      return "FAIL - Payee account not found.";
+      return Constants.FAILPAYMENTNOTFOUND;
     }
 
     try {
       fromAccount.withdraw(amount);
     } catch (InsufficientFundsException e) {
-      return "FAIL - Insufficient funds available to make payment.";
+      return Constants.FAILINSUFFICIENTFUNDS;
     }
+
     payeeAccount.deposit(amount);
 
     return "Payment " + amount.toString() + " made from " + fromAccount.getAccountName() +
