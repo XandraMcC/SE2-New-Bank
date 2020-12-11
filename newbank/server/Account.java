@@ -1,10 +1,7 @@
 package newbank.server;
 
-import newbank.server.commands.Command;
-
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Account {
 
@@ -124,7 +121,7 @@ public class Account {
 	 * @param amount e.g. £5.00
 	 */
 	public void deposit(Currency amount) {
-		setTransactionHistory(Constants.CASH, amount.toString(), Constants.DEPOSIT);
+		setTransactionHistory(amount.toString(), Constants.DEPOSIT);
 		currentBalance.add(amount);
 	}
 
@@ -136,9 +133,9 @@ public class Account {
   public void withdraw(Currency amount) throws InsufficientFundsException {
   	if (!hasFunds(amount)) {
   		throw new InsufficientFundsException();
-		}
-		currentBalance.subtract(amount);
-	  	setTransactionHistory(Constants.CASH, amount.toString(), Constants.WITHDRAW);
+  	}
+  	setTransactionHistory(amount.toString(), Constants.WITHDRAW);
+  	currentBalance.subtract(amount);
   }
 
 	/**
@@ -161,22 +158,18 @@ public class Account {
   		return overdraftLimit;
 	}
 
-	public void setTransactionHistory(String payee, String amount, String type) {
+	public void setTransactionHistory(String amount, String type) {
 		if (type.equals(Constants.WITHDRAW)) {
-			transactionHistory.add(payee + " withdrew: " + amount);
+			transactionHistory.add("Withdrew: " + amount);
 		} else if (type.equals(Constants.DEPOSIT)) {
-			transactionHistory.add(payee + " deposited: " + amount);
+			transactionHistory.add("Deposited: " + amount);
 		} else {
-			transactionHistory.add(payee + " unknown: " + amount);
+			transactionHistory.add("Unknown: " + amount);
 		}
 	}
 
-	public String getTransactionHistory() {
-		for (int i = 0; i < transactionHistory.size(); i++)
-		{
-			return transactionHistory.get(i);
-		}
-		return Constants.END;
+	public ArrayList<String> getTransactionHistory() {
+		return transactionHistory;
 	}
 
 }
