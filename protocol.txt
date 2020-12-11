@@ -23,16 +23,25 @@ Returns:
 MAKEAPAYMENT <account_name> <amount> <payee_name> <payee_account>
 e.g. MAKEAPAYMENT Checking 5 Bhagy Main
 Returns:
-FAIL - Not enough arguments entered.
-FAIL - Your account is not found.
-FAIL - payment amount not recognised.
-FAIL - Payee not found.
-FAIL - Payee account not found.
-FAIL - Insufficient funds available to make payment.
-Payment £5.00 made from Checking to Bhagy account Main. Your new balance is £25.00
+    FAIL - Not enough arguments entered.
+    FAIL - Your account is not found.
+    FAIL - payment amount not recognised.
+    FAIL - Payee not found.
+    FAIL - Payee account not found.
+    FAIL - Insufficient funds available to make payment.
+    Payment £5.00 made from Checking to Bhagy account Main. Your new balance is £25.00
 
 OFFERLOANMARKET <account_name> <amount> <period> <interest_rate> <credit_score>
-e.g.
+e.g. OFFERLOANMARKET Checking 10 12 6 1000
+Returns:
+    FAIL
+    FAIL: Account is not found
+    FAIL: Loan needs a positive tenor
+    FAIL: Loan tenor may not exceed 120 months
+    FAIL: Interest Rate needs to be greater than 0 and less than 20
+    FAIL: Credit score should be between 1 and 2000
+    Loan offered for 10 has been made from Checking account For a period of 12 months at a rate of 6 percent.
+    You are prepared to lend at or above a credit score of 1000
 
 SETOVERDRAFT <account_name> <new_overdraft_limit>
 e.g. SETOVERDRAFT Checking 200
@@ -62,6 +71,17 @@ e.g. SHOWSTATUS Checking
 Returns:
     FAIL
     Checking available balance: £25.00 (Overdraft limit: £200.00)
+
+SHOWTRANSACTIONHISTORY <account_name>
+e.g. SHOWTRANSACTIONHISTORY Checking
+Returns:
+    FAIL
+    Deposited: £1000.00, Withdrew: £50.00
+
+VIEWLOANOFFERS
+e.g. VIEWLOANOFFERS
+Returns:
+    Returns a table of offers
 
 WITHDRAW <account_name> <amount>
 e.g. WITHDRAW Checking 5
