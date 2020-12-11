@@ -19,11 +19,12 @@ public class ViewOffersCommand extends Command {
         String allLoans;
         allLoans = String.format("| %-15s | %-15s | %-15s |\n-------------------------------------------------------\n", heading1, heading2, heading3);
         String currentLoanOffer;
-        for (LoanOffer loanOffer : LoanMarket.getLoanOffers()) {
-            String OffererName = loanOffer.getOfferer().getName();
+
+        for (LoanOffer loanOffer : loans.loanOffers) {
+            String LenderName = loanOffer.getLender().getName();
             String Amount = loanOffer.getAmount().toString();
             String InterestRate = String.valueOf(loanOffer.getInterestRate());
-            currentLoanOffer = String.format("| %-15s | %-15s | %-15s |\n-------------------------------------------------------", OffererName, Amount, InterestRate);
+            currentLoanOffer = String.format("| %-15s | %-15s | %-15s |\n-------------------------------------------------------", LenderName, Amount, InterestRate);
             allLoans += currentLoanOffer + "\n";
         }
         return allLoans;

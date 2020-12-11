@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.*;
 import newbank.server.commands.SetOverdraftCommand;
 import org.junit.jupiter.api.*;

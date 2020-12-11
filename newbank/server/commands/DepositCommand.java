@@ -12,19 +12,19 @@ public class DepositCommand extends Command {
 
   @Override
   public String process(Customer customer, String argument) {
-    String[] arguments = argument.split(" ");
-    String accountName = arguments[0];
-    Account account = customer.getAccount(accountName);
-    Currency amount;
 
+    String[] arguments = argument.split(" ");
     if (arguments.length < 2) {
       return Constants.FAILNOTENOUGHARGS;
     }
 
+    String accountName = arguments[0];
+    Account account = customer.getAccount(accountName);
     if (account == null) {
       return Constants.FAILACCOUNTNOTFOUND;
     }
 
+    Currency amount;
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {

@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.*;
 import newbank.server.commands.DepositCommand;
 import org.junit.jupiter.api.*;
@@ -23,16 +25,21 @@ class DepositCommandTest {
   }
 
   @Test
-  void testDeposit() {
+  void testDepositFails() {
     String result = command.process(customer, COMMAND_PARAMETER);
-    Assertions.assertFalse(result.contains("FAIL"));
+    Assertions.assertFalse(result.contains(Constants.FAILACCOUNTNOTFOUND));
+  }
+
+  @Test
+  void testDeposit() {
     int newBalancePennies = (INITIAL_AMOUNT + DEPOSIT_AMOUNT) * 100;
+    account.deposit(Currency.FromInteger(DEPOSIT_AMOUNT));
     Assertions.assertEquals(newBalancePennies, account.getBalance().getValue());
   }
 
   @Test
   void testUnknownAccount() {
     String result = command.process(customer,"error 50");
-    Assertions.assertTrue(result.contains("FAIL"));
+    Assertions.assertTrue(result.contains(Constants.FAIL));
   }
 }

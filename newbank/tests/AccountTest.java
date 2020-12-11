@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.Account;
 import newbank.server.Currency;
 import newbank.server.InsufficientFundsException;

@@ -1,3 +1,5 @@
+package newbank.tests;
+
 import newbank.server.*;
 import org.junit.jupiter.api.*;
 import java.security.InvalidParameterException;
