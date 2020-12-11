@@ -22,55 +22,57 @@ public class OfferLoanMarketCommand extends Command {
 
     @Override
     public String process(Customer customer,  String argument) {
-
-         String[] arguments = argument.split(" ");
-        if (arguments.length < 4) {
-            return "FAIL";
-        }
-
-
-
-        // Account from which the loan will be made
-
-        Account fromLoanAccount = customer.getAccount(arguments[0]);
-        if (fromLoanAccount == null) {
-            return "FAIL Your Account Not found!";
-        }
-
+        String[] arguments = argument.split(" ");
         Currency amount;
-        try {
-            amount = Currency.FromString(arguments[1]);
-        } catch (NumberFormatException e) {
-            return "FAIL";
+        Account fromLoanAccount;
+        LoanOffer loan;
+        int period;
+        int interestRate;
+        int creditScore;
+
+        if (arguments.length < 4) {
+            return Constants.FAILNOTENOUGHARGS;
         }
 
-        //Loan Period should be greater than 0 and not more than 120 months
-        int period = Integer.parseInt(arguments[2]);
+        period = Integer.parseInt(arguments[2]);
+        interestRate = Integer.parseInt(arguments[3]);
+        creditScore =  Integer.parseInt(arguments[4]);
+
         if (period <= 0) {
-            return "FAIL Loan needs a positive tenor";
+            return Constants.FAILPOSTEN;
         }
-        else if(period > 120){
-            return "Loan tenor may not exceed 120 months";
+
+        if (period > 120) {
+            return Constants.FAILTOOLONG;
         }
 
         // Interest rate entered as an integer between 0 and 20
-        int interestRate = Integer.parseInt(arguments[3]);
-        if(interestRate <= 0 || interestRate > 20){
-            return "FAIL Interest Rate needs to be greater than 0 and less than 20";
+        if (interestRate <= 0 || interestRate > 20) {
+            return Constants.FAILIRWRONG;
         }
 
-        /*Credit score should be between 1 and 2000
-        If the applicant does not have a credit score he can enter 0
-        and will be automatically redirected to a website to obtain one.
+        /**
+         * Credit score should be between 1 and 2000
+         * If the applicant does not have a credit score he can enter 0
+         * and will be automatically redirected to a website to obtain one.
          */
-        int  creditScore =  Integer.parseInt(arguments[4]);
-
-        if(creditScore < 0 || creditScore > 2000) {
-            return "Credit score should be between 1 and 2000.";
+        if (creditScore < 0 || creditScore > 2000) {
+            return Constants.FAILCREDITSCORE;
         }
 
-        LoanOffer loan = new LoanOffer(customer, fromLoanAccount.getAccountName(), amount, interestRate );
-        market.addLoanOffer(loan);
+
+        try {
+            amount = Currency.FromString(arguments[1]);
+            fromLoanAccount = customer.getAccount(arguments[0]);
+            loan = new LoanOffer(customer, fromLoanAccount.getAccountName(), amount, interestRate );
+            market.addLoanOffer(loan);
+        } catch (NumberFormatException e) {
+            return Constants.FAIL;
+        }
+
+        if (fromLoanAccount == null) {
+            return Constants.FAILACCOUNTNOTFOUND;
+        }
 
         // Prints out summary of loan offer
         return "Loan offered for  " + amount + " has been  made from  " + fromLoanAccount.getAccountName() +

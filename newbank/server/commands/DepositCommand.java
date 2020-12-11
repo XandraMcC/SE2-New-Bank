@@ -12,27 +12,27 @@ public class DepositCommand extends Command {
 
   @Override
   public String process(Customer customer, String argument) {
-
     String[] arguments = argument.split(" ");
-    if (arguments.length < 2) {
-      return "FAIL";
-    }
-
     String accountName = arguments[0];
-
     Account account = customer.getAccount(accountName);
-    if (account == null) {
-      return "FAIL";
+    Currency amount;
+
+    if (arguments.length < 2) {
+      return Constants.FAILNOTENOUGHARGS;
     }
 
-    Currency amount;
+    if (account == null) {
+      return Constants.FAILACCOUNTNOTFOUND;
+    }
+
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
-      return "FAIL";
+      return Constants.FAIL;
     }
+
     if (amount.isNegative()) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     account.deposit(amount);
