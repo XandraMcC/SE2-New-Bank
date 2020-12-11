@@ -15,7 +15,7 @@ public class ShowBalanceCommand extends Command {
 
     Account account = customer.getAccount(argument);
     if (account == null) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     return "Current balance: " + account.getBalance().toString();

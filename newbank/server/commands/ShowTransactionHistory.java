@@ -1,6 +1,7 @@
 package newbank.server.commands;
 
 import newbank.server.Account;
+import newbank.server.Constants;
 import newbank.server.Customer;
 
 public class ShowTransactionHistory extends Command {
@@ -16,7 +17,7 @@ public class ShowTransactionHistory extends Command {
 
     Account account = customer.getAccount(argument);
     if (account == null) {
-      return "FAIL";
+      return Constants.FAIL;
     }
 
     return account.getTransactionHistory();

@@ -6,12 +6,14 @@ import java.util.ArrayList;
 public class ViewOffersCommand extends Command {
 
     public ViewOffersCommand(){
-        super("VIEWLOANOFFERS","", "Show all Loan Offers.");
+        super("VIEWLOANOFFERS",
+                "",
+                "Show all Loan Offers.");
     }
 
     @Override
     public String process(Customer customer, String argument){
-        String heading1 = "Offerer";
+        String heading1 = "Lender";
         String heading2 = "Amount (GBP)";
         String heading3 = "Interest Rate";
         String allLoans;

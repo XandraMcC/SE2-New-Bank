@@ -12,11 +12,13 @@ public class ChangePasswordCommand extends Command {
 
   @Override
   public String process(Customer customer, String argument) {
+
     try {
       customer.updatePassword(argument);
     } catch (Exception e) {
-      return "FAIL - password not updated";
+      return Constants.FAILPASSWORDNOTUPDATED;
     }
-    return "Password updated";
+
+    return Constants.PASSWORDUPDATED;
   }
 }
