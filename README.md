@@ -1,8 +1,8 @@
 # SE2-New-Bank
-##Getting Started
+## Getting Started
 Note : This process uses IntelliJ IDE to excute the program, if you are using a different executer the process will vary.
 1. Unzip the zip folder downloaded above into a location on your desktop.
-2. Open IntelliJ IDE and selcet `Open or Import`.
+2. Open IntelliJ IDE and select `Open or Import`.
 3. Locate the upzipped folder and select it.
 
 ### Setting up Intellij IDE
@@ -22,7 +22,7 @@ Note : This process uses IntelliJ IDE to excute the program, if you are using a 
 14. Apply all changes by selecting `Apply`.
 15. IntelliJ is now ready to run the progam code.
 
-##Running the Program
+## Running the Program
 Make sure to follow all the steps above to correctly setup the IntelliJ IDE.
 1. Build the project by selecting the green hammer icon or by selecting `Build > Build Project` from the menu bar.
 2. Make sure the message `Build completed successfully...` is displayed in the bottom left corner.
