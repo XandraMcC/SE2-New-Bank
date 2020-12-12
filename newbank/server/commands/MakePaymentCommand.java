@@ -18,27 +18,27 @@ public class MakePaymentCommand extends Command {
   @Override
   public String process(Customer customer, String argument) {
     String[] arguments = argument.split(" ");
-    Currency amount;
-    Account fromAccount = customer.getAccount(arguments[0]);
-    Customer payee = customerHashMap.get(arguments[2]);
-    Account payeeAccount = payee.getAccount(arguments[3]);
 
     if (arguments.length < 4) {
       return Constants.FAILNOTENOUGHARGS;
     }
 
+    Account fromAccount = customer.getAccount(arguments[0]);
     if (fromAccount == null) {
       return Constants.FAILACCOUNTNOTFOUND;
     }
 
+    Customer payee = customerHashMap.get(arguments[2]);
     if (payee == null) {
       return Constants.FAILPAYEENOTFOUND;
     }
 
+    Account payeeAccount = payee.getAccount(arguments[3]);
     if (payeeAccount == null) {
       return Constants.FAILPAYEEACCOUNTNOTFOUND;
     }
 
+    Currency amount;
     try {
       amount = Currency.FromString(arguments[1]);
     } catch (NumberFormatException e) {
