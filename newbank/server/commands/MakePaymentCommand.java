@@ -19,6 +19,7 @@ public class MakePaymentCommand extends Command {
   public String process(Customer customer, String argument) {
     String[] arguments = argument.split(" ");
 
+
     if (arguments.length < 4) {
       return Constants.FAILNOTENOUGHARGS;
     }
