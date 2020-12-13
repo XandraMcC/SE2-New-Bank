@@ -18,11 +18,11 @@ public class WithdrawCommand extends Command {
 
     String[] arguments = argument.split(" ");
     if (arguments.length < 2) {
-      return Constants.FAIL;
+      return Constants.FAILNOTENOUGHARGS;
     }
     Account account = customer.getAccount(arguments[0]);
     if (account == null) {
-      return Constants.FAIL;
+      return Constants.FAILACCOUNTNOTFOUND;
     }
 
     Currency amount;
@@ -30,13 +30,13 @@ public class WithdrawCommand extends Command {
       amount = Currency.FromString(arguments[1]);
     }
     catch (NumberFormatException e) {
-      return Constants.FAIL;
+      return Constants.FAILPAYMENTNOTFOUND;
     }
 
     try {
       account.withdraw(amount);
     } catch (Exception e) {
-      return Constants.FAIL;
+      return Constants.FAILINSUFFICIENTFUNDS;
     }
 
     return "Withdrew " + amount.toString() +
